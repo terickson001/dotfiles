@@ -1,0 +1,230 @@
+
+syntax on
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+
+" plugin from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+" Setting up My Plugins
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'bling/vim-airline'
+Plugin 'yggdroot/indentline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'godlygeek/tabular'
+Plugin 'majutsushi/tagbar'
+Plugin 'danro/rename.vim'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'delimitMate.vim'
+Plugin 'valloric/YouCompleteMe'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'shougo/unite.vim'
+Plugin 'shougo/vimproc.vim'
+
+" Integration
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'dag/vim-fish'
+Plugin 'kh3phr3n/python-syntax'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'justinmk/vim-syntax-extra'
+Plugin 'a.vim'
+Plugin 'othree/html5.vim'
+Plugin 'tpope/vim-haml'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'dag/vim2hs'
+"Plugin 'eagletmt/neco-ghc'
+Plugin 'pbrisbin/vim-syntax-shakespeare'
+Plugin 'kchmck/vim-coffee-script'
+
+" Color Schemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'gummesson/stereokai.vim'
+Plugin 'crusoexia/vim-monokai'
+Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'jnurmine/Zenburn'
+Plugin 'rakr/vim-one'
+Plugin 'chriskempson/base16-vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+ "Put your non-Plugin stuff after this line
+
+" Alt key fix
+let c='a'
+while c <= 'z'
+    exec "set <A-".c.">=\e".c
+    exec "imap \e".c." <A-".c.">"
+    let c = nr2char(1+char2nr(c))
+endw
+
+set timeout ttimeoutlen=50
+
+set cursorline
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set hlsearch
+
+if has("nvim")
+    let $NVIM_TUI_ENABLE_TRUE_COLORS=1
+endif
+
+if !has("gui_running")
+    set term=xterm-256color
+    let g:base16colorspace="256"    
+    set t_Co=256
+    set t_ZH=[3m
+    set t_ZR=[23m
+    let &t_AB="\e[48;5;%dm"
+    let &t_AF="\e[38;5;%dm"
+    colorscheme base16-ocean
+    "set background=dark
+    set termguicolors
+    set mouse=a
+
+    "hi LineNr ctermfg=2 ctermbg=0
+    "hi CursorLine ctermbg=18
+    "hi CursorLineNr ctermbg=18 ctermfg=2
+    "hi Pmenu ctermbg=18
+    "hi VertSplit ctermbg=2 ctermfg=2
+
+    "hi SignColumn ctermbg=0
+    "hi GitGutterAdd ctermfg=green ctermbg=0
+    "hi GitGutterChange ctermfg=yellow ctermbg=0
+    "hi GitGutterDelete ctermfg=red ctermbg=0
+    "hi GitGutterChangeDelete ctermfg=blue ctermfg=0 
+
+    "hi clear SignColumn
+
+else
+    colorscheme base16-ocean
+    set background=dark
+    set guioptions-=m "remove menubar
+    set guioptions-=T "remove toolbar
+    set guioptions-=r "remove right-hand scrollbar
+    set guioptions-=L "remove left-hand scrollbar
+endif
+
+
+set number
+set nowrap
+
+set showcmd
+set updatetime=250
+
+set ignorecase
+set smartcase
+
+" Language-Specific settings
+au Filetype python set ts=4 sw=4 et
+
+" Move Lines
+nnoremap <ESC>j :m .+v:count1<CR>==
+nnoremap <ESC>k :m .-1-v:count1<CR>==
+vnoremap <M-j> :m '>+1<CR>gv=gv
+vnoremap <M-k> :m '<-2<CR>gv=gv
+
+" Clear Search
+nnoremap <Leader>cls :let @/=""<CR>
+
+" Tagbar Keymaps
+nnoremap <F8> :TagbarToggle<CR>
+let g:tagbar_width=30
+
+" Remove trailing whitespace
+nnoremap <Leader>tr :%s/\s*$//g<CR>:let @/=""<CR>
+
+" Header <-> Source Switch Mapping
+nnoremap <F4> :A<CR>
+" netrw settings
+nnoremap <F2> :Lexplore<CR>
+
+let g:netrw_usetab=1
+let g:netrw_liststyle=3
+let g:netrw_winsize=15
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+inoremap <C-;> :call NERDComment(0,"toggle")<CR>
+
+nnoremap <Leader>s :SyntasticToggleMode<CR>
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatusLineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {'mode': 'passive'}
+
+"iunmap <Leader>\
+au VimEnter * 
+    \ iunmap \ihn|
+    \ iunmap \is|
+    \ iunmap \ih
+
+"nnoremap <Leader>\ <Plug>(easymotion-prefix)
+"vnoremap <Leader>\ <Plug>(easymotion-prefix)
+" Syntax highlighting group under cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" Stop AutoCommenting
+au FileType * setlocal formatoptions-=cro
+
+" Project Specific .vimrc
+set exrc
+set secure
+
+" GLSL File Detection
+au BufNewFile,BufRead *vert set filetype=glsl
+au BufNewFile,BufRead *frag set filetype=glsl
+
+" TypeScript File Detection
+au BufNewFile,BufRead *.ts set filetype=typescript
+
+" Haskell Settings
+"let g:ycm_semantic_triggers = {'haskell' : ['.']}
+"let g:necoghc_enable_detailed_browse = 1
+let g:ycm_filetype_blacklist = { 'haskell' : 1 }
+let $PATH = $PATH . ':' . expand('~/.cabal/bin')
+au Filetype haskell set ts=8 et sts=4 sw=4 sr
+
+"   Shakespearean Templates File Detection
+au BufNewFile,BufRead *.hamlet set filetype=hamlet
+au BufNewFile,BufRead *.lucius set filetype=lucius
+au BufNewFile,BufRead *.cassius set filetype=cassius
+au BufNewFile,BufRead *.julius set filetype=julius
