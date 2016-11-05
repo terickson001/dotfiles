@@ -1,0 +1,21 @@
+! ! Base-16 Default
+ URxvt.foreground:  #d8d8d8
+ URxvt.background:  #181818
+ URxvt.cursorColor: #aeafad
+ URxvt.color0:      #181818
+ URxvt.color1:      #ab4642
+ URxvt.color2:      #a1b56c
+ URxvt.color3:      #f7ca88
+ URxvt.color4:      #7cafc2
+ URxvt.color5:      #ba8baf
+ URxvt.color6:      #86c1b9
+ URxvt.color7:      #d8d8d8
+ URxvt.color8:      #585858
+ URxvt.color9:      #ab4642
+ URxvt.color10:     #a1b56c
+ URxvt.color11:     #f7ca88
+ URxvt.color12:     #7cafc2
+ URxvt.color13:     #ba8baf
+ URxvt.color14:     #86c1b9
+ URxvt.color15:     #f8f8f8
+ URxvt.color18:     #282828

@@ -1,0 +1,1 @@
+/home/tyler/.local/share/omf/themes/mtahmed/fish_prompt.fish

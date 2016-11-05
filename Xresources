@@ -1,0 +1,2 @@
+#include ".Xresources.d/rxvt-unicode.general"
+#include ".Xresources.d/rxvt-unicode.theme-ocean"
