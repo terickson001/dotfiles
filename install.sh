@@ -2,7 +2,7 @@
 
 shopt -s extglob
 dir=$HOME/dotfiles
-olddir=~$HOME/dotfiles_old
+olddir=$HOME/dotfiles_old
 
 cd $dir
 files=!(@(`basename "$0"`|.git|.gitignore))
