@@ -1,6 +1,6 @@
 urxvt*scrollBar: false
 urxvt*cursorBlink: 1
-urxvt*font: xft:DejaVu\ Sans\ Mono\ For\ Powerline:size=12
+urxvt*font: xft:Terminess\ Powerline:size=12
 
 urxvt*scrollTtyOutput: false
 urxvt*scrollWithBuffer: true

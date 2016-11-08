@@ -109,7 +109,7 @@ if !has("gui_running")
     let &t_AF="\e[38;5;%dm"
     colorscheme base16-ocean
     "set background=dark
-    set termguicolors
+    "set termguicolors
     set mouse=a
 
     "hi LineNr ctermfg=2 ctermbg=0

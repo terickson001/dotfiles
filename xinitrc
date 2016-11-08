@@ -5,4 +5,8 @@
 # global xinitrc file, used by all X sessions started by xinit (startx)
 
 # invoke global X session script
-. /etc/X11/Xsession
+
+xrdb ~/.Xresources
+urxvtd -q -o -f
+exec awesome
+

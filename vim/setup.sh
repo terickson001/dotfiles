@@ -39,4 +39,4 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
             echo "  $PACKAGE already installed, skipping.."
         fi
     fi
-done < "/home/tyler/.vim/vimrc"
+done < "$HOME/.vim/vimrc"
