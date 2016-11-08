@@ -38,12 +38,16 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+--beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/themes/custom/theme.lua")
+
+awful.util.spawn("xcompmgr &")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
+browser = "luakit"
 
 -- Default modkey.
 -- Usually, Mod1 is the key with a logo between Control and Alt.
@@ -51,6 +55,10 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod1"
+
+naughty.config.presets.normal.opacity = 0.5
+naughty.config.presets.low.opacity = 0.5
+naughty.config.presets.critical.opacity = 0.5
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -246,6 +254,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(browser) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -365,6 +374,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "URxvt" },
+      properties = { opacity = 0.9   } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
