@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+xpmroot $HOME/.xmonad/background.png &
+
+exec xmonad

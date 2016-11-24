@@ -41,5 +41,11 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 
+export EDITOR=vim
 
+alias ":q"=exit
+alias "edit"=$EDITOR
+alias ":e"="edit"
+alias ":qa"="pkill -9 urxvt"
 
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin"

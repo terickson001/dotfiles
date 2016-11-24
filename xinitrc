@@ -6,7 +6,24 @@
 
 # invoke global X session script
 
+if [[ -x /usr/bin/synclient ]]; then
+    synclient TapButton1=1
+    synclient TapButton2=2
+    synclient TapButton3=3
+fi
 xrdb ~/.Xresources
 urxvtd -q -o -f
-exec awesome
+
+session=${1:-awesome}
+
+case $session in
+    awesome ) exec awesome;;
+    i3|13wm ) exec i3;;
+    openbox ) exec openbox;;
+    xmonad  ) source $HOME/.Xsession.d/xmonad.session;;
+    bspwm   ) exec bspwm;;
+    dwm     ) exec dwm;;
+    *       ) exec $session;;
+esac
+
 

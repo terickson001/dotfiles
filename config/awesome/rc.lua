@@ -47,7 +47,7 @@ awful.util.spawn("xcompmgr &")
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-browser = "luakit"
+browser = "tabbed -c vimb -e"
 
 -- Default modkey.
 -- Usually, Mod1 is the key with a logo between Control and Alt.
@@ -303,7 +303,9 @@ clientkeys = awful.util.table.join(
         end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn_with_shell("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn_with_shell("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") end),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn_with_shell("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end)
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn_with_shell("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end),
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight +10") end),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -10") end)
 )
 
 -- Bind all key numbers to tags.

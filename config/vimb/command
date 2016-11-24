@@ -1,0 +1,209 @@
+o test
+awesomewm
+open awesomewm
+open awesome
+help
+shortcut-default
+shortcut-default g
+shortcut-default google
+shortcut-add go=https://encrypted.google.com/search?=$0
+open hello world
+shortcut-remove
+shortcut-remove go
+shortcut-add go=https://encrypted.google.com/search?q=$0
+open encrypted google search
+open vimb tabs
+tabopen !
+shortcut-default -go
+shortcut-default go
+tabopen  test2
+qa!
+q!
+!echo $VIMB_XID
+shellcmd $VIMB_XID
+shellcmd echo $VIMB_XID
+shellcmd pkill $VIMB_XID
+shellcmd pkill -9 $VIMB_XID
+tabopen vimb dardestthing
+open vim darndest
+tabopen vim add command
+tabopen vimb add command
+cmap :qa :sh! echo "Test"
+tabopen vimb browser add custom command
+tabopen test
+command
+tabopen vimb command
+cmap qa :sh! echo "TEST"
+cmap qa<Enter> sh! echo "TEST"<CR><Esc>
+cmap qa<Enter> sh! echo "TEST"<CR>
+cunmap qa
+cmap qa<Return> sh! echo "TEST"<CR>
+qa<Return>
+cunmap qa<Return>
+cunmap qa<Enter>
+open arch pip3
+tabopen stack updatinng packa index hackage
+tabopen aur stack haskell
+open github pages
+open vimb fonts
+open why is duck duck go default on linux
+shortcut-default du
+shortcut
+open vimb darndest
+open voter turnout 2016 election
+open go voter turnout 2016 election
+open github as a cdn
+tabopen github as a cdn
+open lambda chat
+tabopen what is the dnc
+tabopen github pages
+open popular vote 206 elewction
+open vote count 2016 election
+open 2016 elewction total vote count
+tabopen total vote count 2016 election
+tabopen colorscheme kyruu
+tabopen ryuuko vimm
+open fastest terminal emulator linux
+open go 256 color lightwight terminal emulator
+open xinit case
+open bash default variable
+open grub boot menus
+tabopen go grub2 custom menus
+tabopen grub2 graphical menus
+tabopen grub2 themes
+open brightness controls
+open xf86 brightness
+open mailmerge change deciamls
+open hamlet yesod
+tabopen vim indent files
+open percentage opython format string
+tabopen vim =!#
+open vim match against pattern
+open python floor
+tabopen vim and
+open vim and operator
+open go vim or
+open go vim tilde equals
+open vim synidattr
+open apmroot
+open xpmroot
+open pmroot
+open xpmroot package arch
+open xmonad run command
+open go xpmroot failed to lolad image file
+open xmonad background
+open google.com
+open test
+open haskell data.text vs string
+open servant telnet
+open servant tutorial
+open telent server iwth conduit haskell
+open pytohn enumerate
+open haskell servant post
+open haskell servant tutorial
+tabopen control s freezes terminal
+tabopen python float string format
+tabopen servant reqbody update
+tabopen vim forwarda buffer
+open vim ctrl o
+tabopen console overwrite multiple lines
+tabopen servant how to use reqbody
+tabopen https response types
+tabopen python exit
+tabopen vimb duplaicate
+open vimb cheatsheet
+sp
+tabopen !/
+tabopen URI
+open
+open haskell read the docs servant
+tabopen haskell send POST data
+tabopen haskell servant send post
+tabopen haskell network postRequest
+open send json to post request
+tabopen haskell servant Proxy
+tabopen
+tabopen http://haskell-servant.readthedocs.io/en/stable/tutorial/Server.html
+open json content type
+tabopen hoogle
+tabopen haskell servant post and get
+tabopen localhost:8080/messages
+open http://localhost:8080/messagepost
+tabopen servant post to json
+tabopen haskell servant post to json
+open http add a json record using post
+open haskell database
+tabopen vimb show history
+tabopen haskell mvar
+open haskell liftIO
+tabopen haskell lifto
+open using MVars
+tabopen programming threads the same as cpu threads
+open haskell /=
+tabopen haskell eq int
+tabopen haskell IO
+tabopen haskell IORef vs MVar vs Tvar
+open haskell IORef
+tabopen haskell servant forece refresh
+open haskell IOref vs Mvar vs Tvar
+tabopen haskell MVar tutorial
+tabopen haskell map
+tabopen servant read the docs
+tabopen lhttps://ocalhost:8080
+tabopen https://localhost:8080
+tabopen http://localhost:8080
+open http://localhost:8080/messages
+open http://localhost:8080/messages/list
+open http://localhost:8080/messages/list/add
+tabopen haskell debugging with prints
+open haskell servant reqbody
+tabopen haskell servant reqbody
+open haskell servant reqbody example
+open haskell servant elm
+tabopen https://github.com/haskell-servant/example-servant-elm/blob/master/server/src/App.hs
+tabopen stackoverflow.com
+tabopen readthedocs servant haskell
+tabopen haskell servant github
+tabopen http://localhost:8080/messages/list
+open haskell conduit
+tabopen haskell conduit yield
+tabopen data.conduit.binary
+o du data.conduit.binary
+open haskell conduit get values
+tabopen haskell conduit tutorial
+open car seat headrest cosmic hero intro
+tabopen is google drive secure
+open html5 post to different server
+open fill form data automatically
+qa
+open javascript detect server change
+open live.js github
+tabopen spotify.com
+tabopen eg as example
+open yuyu okusho
+open yu yuy hakusho translation
+open haskell ghci string souce
+tabopen type signatures
+open tpanasonic dp-8035 error e04-01
+open panasconic dp-8035 fuser unit
+tabopen panasonic dp-8035 jcode
+open panasonic dp-8035 default service mode password
+tabopen panasonic dp-8035 error eo4-01
+open different ;ambda function syntaxes
+open ghc list
+open https://hackage.haskell.org/package/base-4.9.0.0/docs/src/GHC.List.html
+open https://hackage.haskell.org/package/base-4.9.0.0/docs/src/GHC.Base.html
+open https://hackage.haskell.org/package/base-4.9.0.0/docs/src/GHC.Types.html
+tabopen ghc types
+tabopen outfix operator
+open ghc tulpe
+tabopen 307 area code
+tabopen (26022)/60/60
+open arch linux install
+tabopen arhclinux multilib
+open funhaus.roosterteeth.com
+tabopen gmail.com
+q
+tabopen speedtest from terminal
+tabopen duck duck go of email
+tabopen atch show internet devices
