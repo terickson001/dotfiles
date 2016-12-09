@@ -35,3 +35,10 @@ config/libaccounts-glib/
 vim/bundle/
 vim/.netrwhist
 vim/.vimrc.bak
+antigen/repos/
+antigen/.cache/
+config/Foxit Software/
+config/vimb/cookies
+config/vimb/hsts
+config/vimb/history
+config/vimb/closed

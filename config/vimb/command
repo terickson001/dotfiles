@@ -118,11 +118,9 @@ tabopen URI
 open
 open haskell read the docs servant
 tabopen haskell send POST data
-tabopen haskell servant send post
 tabopen haskell network postRequest
 open send json to post request
 tabopen haskell servant Proxy
-tabopen
 tabopen http://haskell-servant.readthedocs.io/en/stable/tutorial/Server.html
 open json content type
 tabopen hoogle
@@ -132,7 +130,6 @@ open http://localhost:8080/messagepost
 tabopen servant post to json
 tabopen haskell servant post to json
 open http add a json record using post
-open haskell database
 tabopen vimb show history
 tabopen haskell mvar
 open haskell liftIO
@@ -161,7 +158,6 @@ tabopen haskell servant reqbody
 open haskell servant reqbody example
 open haskell servant elm
 tabopen https://github.com/haskell-servant/example-servant-elm/blob/master/server/src/App.hs
-tabopen stackoverflow.com
 tabopen readthedocs servant haskell
 tabopen haskell servant github
 tabopen http://localhost:8080/messages/list
@@ -202,8 +198,251 @@ tabopen (26022)/60/60
 open arch linux install
 tabopen arhclinux multilib
 open funhaus.roosterteeth.com
-tabopen gmail.com
-q
 tabopen speedtest from terminal
 tabopen duck duck go of email
 tabopen atch show internet devices
+tabopen install pacuar'
+open install pacaur
+tabopen xinit cannot open /dev/tty0
+open xinit failed to set IOPL for I/O (operation not permitted)
+open xinit error no displays found
+tabopen pacman install anitgien
+tabopen no cursor in tty
+tabopen ramin djawadi motion picture soundtrack
+tabopen westworld motion picture soundtrack cover
+open westworlds dissapointing use of radiohead
+open creating a large server database
+open gmail.com
+open haskell database
+tabopen making a database interface
+tabopen c++ vs haskell speed
+tabopen gmail.com
+open awesome wm rofi
+open rofi
+tabopen rofi arch
+tabopen dead_circumflex
+tabopen what is the dead_circumflex key
+tabopen styling rofi
+tabopen base16 rofi themes
+tabopen terminal theme to rofi theme
+tabopen vimawesome
+tabopen haskell syntax vim
+open haskell vim syntax highlightin
+tabopen radiohead idioteque
+open unicode character down
+open arch linux show installed font pacakges
+tabopen hbonow linux
+open pacaur run without interaction
+tabopen command line speedtest
+open :q
+open bash file to array
+tabopen bash function syntax
+tabopen bassh get distribution
+tabopen awesomewm shortcut
+tabopen nvidia xrandr support
+tabopen xrandr offset
+tabopen xrandr set rsolution of second monitor
+tabopen sed multiple patterns
+tabopen bash string equality
+tabopen zsh disable vimode
+tabopen zsh disable zle
+tabopen zsh enable zle
+tabopen zle get mode
+tabopen zle widgets can only be called when zle is active
+tabopen zsh bindkey -e not working
+open bash get distro
+tabopen bash contains
+open bash functions
+tabopen pacaur run headleass
+open bash check if command exists
+open bash not
+open bash echo without newline
+open pacman needed
+open pacaur install
+tabopen bash get script directory
+tabopen aur
+open bash is command with parameters valid
+open bash is command valid
+open bash run command without effects
+open bash file test not
+open bash script catch output
+open pipe stderr and stdout to /dev/null
+open bash indent output
+tabopen rgb to gray
+tabopen postgresql autopopulate database
+tabopen haskell run shell commands
+tabopen error while loading libreadline.so
+tabopen awk cant find previous version of readline
+tabopen postgres get column names
+tabopen postgresql get column names
+tabopen postgresql table schema
+tabopen haskell remove from IO monad
+tabopen haskell packIO
+tabopen haskell liftM operator
+tabopen postgresql change column order
+tabopen haskell show instance
+tabopen haskell lambda pattern matching
+open haskell filter based on constructor
+tabopen postgres filter and sort
+tabopen haskell deriving
+tabopen haskell case on one line
+open haskell foldl tuple
+open haskel lsingle line case lambda
+open haskell map over tuple
+open postgres order by
+open postgres where
+open haskell apply last argument first
+open haskell cannot parse data constructor in data/newtype declaration
+tabopen postgres delete row by value
+open arch get battery info
+open arch get batterly level
+tabopen battery design capacity last full capacity
+open postgres delete by index
+tabopen bobby tables sql
+tabopen sql data format
+tabopen SQL datatype
+tabopen postgresql custom datatypes
+tabopen sql ssn type
+open postgresql cant start
+open archlinux upgrading postgresql
+open postgres add coulumn to table
+tabopen sql reference to other table
+open sql record types
+open postgresql change column name
+open postgresql types
+tabopen postgresql link tables
+tabopen postgresql list type
+tabopen quasiquoter interpolation haskell
+tabopen yesod lucius mixins
+tabopen urxvt copy
+tabopen troubleshooted or troubleshot
+Q
+tabopen haskell
+open mathematics.stackexchange.com
+tabopen mathematics.stackexchange.com
+save
+tabopen
+tabopen vimb browser bookmar
+bma
+h
+bma calc calculus learn quick
+tabopen !calc learn
+bma calc mit
+bmr
+bma calc calculus learn mit
+open https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/lecture-notes/
+open http://math.stackexchange.com/questions/615890/how-to-learn-calculus-for-beginners?s=1|1.9423
+tabopen archlinux pdf viewers
+open stackexchange
+tabopen haskell servant send post
+open widgetfile yesod
+tabopen yesod embed hamlet
+open yesod embed widgetFile
+tabopen yesod no instance for monadthrow m0 towidget
+tabopen grep file contents
+open yesod routes
+tabopen yesod cannot satisfy package-key main
+tabopen yesod devel loops continuoslt
+tabopen yesod devel no remote package servers
+tabopen localhost
+open yesod view compiled lucius
+inspect
+tabopen skeleton
+open yesod link static stylesheet
+tabopen yesod static file not in scop
+open http://locahlost:3000
+open http://localhost:3000
+tabopen stackoverflow
+tabopen is toString bad
+tabopen linux 'yes' bash
+tabopen http://lolcalhost:3000
+open http://localhost:3000/
+tabopen lucius yesod mixin support
+tabopen yesod can't link staticfile
+tabopen yesod
+tabopen cabal config repository
+tabopen minitor battery arch-linux
+tabopen vim ctrlp directory
+tabopen linux proc battery
+tabopen awesome widgets
+tabopen stack hsc2hs
+open awesommewm user widgets
+tabopen narrow unicode column for progressbar
+tabopen progressbar
+tabopen unicode characters
+tabopen lua floor
+tabopen awesomewm pango markup
+tabopen lua replicate string
+tabopen lua for loop
+open lua format float to percent
+open awesomewm user widgets
+open lua dictionary
+tabopen yesod static routes not reloading
+tabopen grep with capture
+tabopen yesod devel dependencies missing
+tabopen yesod devel issue github
+tabopen yesod bin hackage
+tabopen yesod start project
+open install yesod 1.5
+tabopen donwload git repo without cloning
+open git clone branch
+tabopen client insists on wordpress
+tabopen yesod cms
+tabopen lambdacm
+tabopen lambdacms example
+tabopen markettrends
+tabopen markettrends hosting
+open westshorenet.com
+tabopen westshore.comm
+open http://westshore.com
+open http://westshore.net
+tabopen yesod scaffold not updating
+tabopen ghci file
+tabopen stackoverflow.com
+tabopen Yesod.Default.Util
+tabopen du Yesod.Default.Util
+tabopen https://localhost:3000
+tabopen http://localhost:3000
+tabopen lucius mixin support
+tabopen haskell shakespeare
+tabopen shouliprefix
+tabopen font-smoothing mozilla
+open moz-osx-font-smoothing
+tabopen shakespeare haskell yesod github
+tabopen stack find package on systtem
+tabopen haskell parsec tutorial
+tabopen hackage Text parsercmbinators parsec
+tabopen parsec match any character
+tabopen haskell empty char
+open problems with lucius mixin parsing
+tabopen du
+open go
+open encrypted.google.com
+q
+tabopen exunits
+open css ex units
+tabopen yesod lucius
+tabopen haskell export all from module
+tabopen haskell force export all
+open yesod github
+tabopen haskell Q Exp
+tabopen https://github.com/yesodweb/shakespeare/blob/master/Text/Lucius.hs
+tabopen haskell write to file
+tabopen couldnt match expected type Text with actual type [Char]
+tabopen Data.Text.Internal.Lazy.Text to Data.Text
+tabopen grep or
+tabopen evga gtx 770
+tabopen nvidia card 3 dvi ports
+tabopen display port max refresh
+open bash pass arguments to function
+open bash for in
+open bash newlines to carriage return
+open bsah make output overwrite
+open stackoverflow
+open stackverflow.com
+open stackoverflow.com
+open pacman check if package is installed
+open bash string equality
+open bash contains
+open bash string splciing
+open bash yes no input

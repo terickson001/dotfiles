@@ -1,2 +1,3 @@
 #include ".Xresources.d/rxvt-unicode.general"
 #include ".Xresources.d/rxvt-unicode.theme-ocean"
+#include ".Xresources.d/rofi.theme-android_notification"

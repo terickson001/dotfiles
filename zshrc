@@ -6,7 +6,8 @@ source /usr/share/zsh/scripts/antigen/antigen.zsh
 source /usr/share/base16/shell/base16-ocean.dark.sh
 
 source $HOME/.antigen/custom/colors
-#antigen bundle robbyrussell/oh-my-zsh lib/
+
+bindkey -e
 
 function prompt_git_info() {
     local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
@@ -18,7 +19,7 @@ function prompt_git_info() {
     else
         local color=yellow
     fi
-    echo "%{$fg_bold[blue]%}|[git:%{$fg_bold[$color]%}$branch%{$reset_color%}]"
+    echo "%{$fg_bold[blue]%}|%{$reset_color%}[git:%{$fg_bold[$color]%}$branch%{$reset_color%}]"
 }
 
 function prompt_color() {

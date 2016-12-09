@@ -11,6 +11,9 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+local my_widgets = {
+    battery_widget=require("widgets.battery")
+}
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -201,6 +204,7 @@ for s = 1, screen.count() do
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
+    right_layout:add(my_widgets["battery_widget"])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
@@ -280,7 +284,8 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    --awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function()  awful.util.spawn("rofi -show run") end)
 )
 
 clientkeys = awful.util.table.join(
