@@ -453,3 +453,5 @@ open lua concat intercalate stirng
 open lua format string boolean
 tabopen lua unicode character
 tabopen awesomewm chang font
+tabopen lua test if file exists
+open pango markup font size

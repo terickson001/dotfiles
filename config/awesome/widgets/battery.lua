@@ -4,6 +4,8 @@ local awful = require("awful")
 local battery_widget= wibox.widget.textbox()
 battery_widget:set_align("right")
 
+local hasBattery = io.popen("/usr/bin/acpi -b", "r"):read("*l") ~= ""
+
 -- Full:  |██|
 -- Empty: |    |
 local phases = {' ', '▏', '▎', '▍', '▌', '▋', '▊', '▉'}
@@ -13,12 +15,19 @@ local blockCount = 4
 local chunkPercent = 1/blockCount
 
 function update_battery(widget)
-    local info = io.popen("/usr/bin/acpi -i", "r"):read("*l")
+    if not hasBattery then return end
+
+    local info = io.popen("/usr/bin/acpi -b", "r"):read("*l")
     for status, percent in info:gmatch("Battery %d: (%a+), (%d+)%%") do
         if status ~= "Full" then
             time = info:match(".* (%d+:%d+:%d+) ")
+            if status == "Charging" then
+                statusIndicator = "<span color='limegreen' font='12'>⬆</span>"
+            else
+                statusIndicator = "<span color='yellow' font='12'>⬇</span>"
+            end
         elseif percent=="100" then
-            widget:set_markup("  100%|<span color='limegreen'>██</span>|")
+            widget:set_markup("  100%|<span color='limegreen'>██</span>| ")
             return
         end
         percent = tonumber(percent)/100
@@ -37,7 +46,7 @@ function update_battery(widget)
             empty = empty .. phases[1]
         end
         battery = full .. part .. empty
-        widget:set_markup(string.format("<span font='Terminess Powerline'>  %3.f%%|<span color='%s'>%s</span>|</span>", percent*100, color, battery))
+        widget:set_markup(string.format("<span font='Terminess Powerline'>  %3.f%%|<span color='%s'>%s</span>|%s</span>", percent*100, color, battery, statusIndicator))
     end
 end
 
