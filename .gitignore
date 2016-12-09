@@ -43,5 +43,6 @@ config/vimb/cookies
 config/vimb/hsts
 config/vimb/history
 config/vimb/closed
+config/vimb/search
 config/google-chrome-unstable/
 config/freshwrapper-data/

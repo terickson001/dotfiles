@@ -446,3 +446,10 @@ open bash string equality
 open bash contains
 open bash string splciing
 open bash yes no input
+open force git pull
+open lua get device name
+tabopen lua string in
+open lua concat intercalate stirng
+open lua format string boolean
+tabopen lua unicode character
+tabopen awesomewm chang font

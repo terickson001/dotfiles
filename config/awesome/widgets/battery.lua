@@ -9,11 +9,10 @@ battery_widget:set_align("right")
 local phases = {' ', '▏', '▎', '▍', '▌', '▋', '▊', '▉'}
 phases[0]=''
 local fullChar = "█"
-local blockCount = 2
+local blockCount = 4
 local chunkPercent = 1/blockCount
 
 function update_battery(widget)
-    local active
     local info = io.popen("/usr/bin/acpi -i", "r"):read("*l")
     for status, percent in info:gmatch("Battery %d: (%a+), (%d+)%%") do
         if status ~= "Full" then
@@ -24,15 +23,21 @@ function update_battery(widget)
         end
         percent = tonumber(percent)/100
         fullBlocks = percent//chunkPercent
+        emptyBlocks = (1-percent)//chunkPercent
         partialBlock=math.ceil(percent % chunkPercent / chunkPercent * 8)
 
         local color = percent > .60 and "limegreen" or (percent > .30 and "yellow" or "red")
-        local battery = ""
+        local full = ""
         for i=1, fullBlocks do
-            battery = battery .. fullChar
+            full = full .. fullChar
         end
-        battery = battery .. phases[partialBlock]
-        widget:set_markup(string.format("  %3.f%%|<span color='%s'>%s</span>|", percent*100, color, battery))
+        local part = phases[partialBlock]
+        local empty = ""
+        for i=1, emptyBlocks do
+            empty = empty .. phases[1]
+        end
+        battery = full .. part .. empty
+        widget:set_markup(string.format("<span font='Terminess Powerline'>  %3.f%%|<span color='%s'>%s</span>|</span>", percent*100, color, battery))
     end
 end
 
