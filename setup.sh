@@ -5,15 +5,20 @@ dir=$HOME/dotfiles
 olddir=$HOME/dotfiles_old
 
 cd $dir
-files=!(@(`basename "$0"`|.git|.gitignore|install.sh|dependencies))
+files=!(@(`basename "$0"`|.git|.gitignore|install.sh|dependencies|.|..))
 
-echo "Creating '$olddir' to backup current dotfiles"
-mkdir -p $olddir
-echo "...done"
+if [ ! -d $olddir ]; then
+    echo "Creating '$olddir' to backup current dotfiles"
+    mkdir -p $olddir
+    echo "...done"
+fi
 
 
 for file in $files; do
-	if [ -f "$HOME/.$file" ]; then
+    if [ -L "$HOME/.$file" ]; then
+        continue
+    fi
+	if [ -e "$HOME/.$file" ]; then
 		echo "Moving '$HOME/.$file' to '$olddir'"
 		mv $HOME/.$file $olddir/$file
 	fi

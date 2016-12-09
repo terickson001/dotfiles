@@ -4,7 +4,7 @@ local awful = require("awful")
 local battery_widget= wibox.widget.textbox()
 battery_widget:set_align("right")
 
--- Full:  |████|
+-- Full:  |██|
 -- Empty: |    |
 local phases = {' ', '▏', '▎', '▍', '▌', '▋', '▊', '▉'}
 phases[0]=''

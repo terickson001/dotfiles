@@ -11,8 +11,10 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+local hostname = io.popen("/bin/hostname", "r"):read("*a")
+
 local my_widgets = {
-    battery_widget=require("widgets.battery")
+    battery_widget=hostname:match("lap") and require("widgets.battery") or nil
 }
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -204,7 +206,11 @@ for s = 1, screen.count() do
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
-    right_layout:add(my_widgets["battery_widget"])
+
+    --laptop specific widgets
+    if hostname:match("lap") then
+        right_layout:add(my_widgets["battery_widget"])
+    end
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
