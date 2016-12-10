@@ -4,7 +4,7 @@ local awful = require("awful")
 local battery_widget= wibox.widget.textbox()
 battery_widget:set_align("right")
 
-local hasBattery = io.popen("/usr/bin/acpi -b", "r"):read("*l") ~= ""
+local hasBattery = io.popen("/usr/bin/acpi -b", "r"):read("*l") ~= nil
 
 -- Full:  |██|
 -- Empty: |    |
@@ -15,7 +15,7 @@ local blockCount = 4
 local chunkPercent = 1/blockCount
 
 function update_battery(widget)
-    if not hasBattery then return end
+    if not hasBattery then return nil end
 
     local info = io.popen("/usr/bin/acpi -b", "r"):read("*l")
     for status, percent in info:gmatch("Battery %d: (%a+), (%d+)%%") do
