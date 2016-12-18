@@ -13,6 +13,8 @@ if [[ -x /usr/bin/synclient ]]; then
 fi
 xrdb ~/.Xresources
 urxvtd -q -o -f
+xset -s off
+xset -dpms
 
 session=${1:-awesome}
 
