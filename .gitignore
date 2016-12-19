@@ -49,7 +49,7 @@
 ## .config includes ##
 !config
 
-!config/vimb
+!config/vimb/
 !config/vimb/config
 
 !config/awesome/
