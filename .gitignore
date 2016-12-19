@@ -32,6 +32,9 @@ config/evolutions/
 config/autostart/
 config/mc/
 config/libaccounts-glib/
+config/mimeapps.list
+config/gconf/
+config/dconf/
 vim/bundle/
 vim/.netrwhist
 vim/.vimrc.bak
