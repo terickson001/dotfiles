@@ -378,6 +378,7 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      honor_size_hints = false,
                      raise = true,
+                     screen = awful.screen.focused,
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
