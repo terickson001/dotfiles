@@ -22,7 +22,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Setting up My Plugins
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 Plugin 'easymotion/vim-easymotion'
@@ -225,7 +225,9 @@ let $PATH = $PATH . ':' . expand('~/.cabal/bin')
 au Filetype haskell set ts=8 et sts=4 sw=4 sr
 
 "   Shakespearean Templates File Detection
-au BufNewFile,BufRead *.hamlet set filetype=hamlet
-au BufNewFile,BufRead *.lucius set filetype=lucius
-au BufNewFile,BufRead *.cassius set filetype=cassius
-au BufNewFile,BufRead *.julius set filetype=julius
+au BufNewFile,BufRead *.hamlet set filetype=hamlet ts=2 et sts=2 sw=2
+au BufNewFile,BufRead *.lucius set filetype=lucius ts=4 et sts=4 sw=4
+au BufNewFile,BufRead *.cassius set filetype=cassius ts=4 et sts=4 sw=4
+au BufNewFile,BufRead *.julius set filetype=julius ts=4 et sts=4 sw=4
+
+au BufEnter,InsertLeave * syntax sync fromstart
