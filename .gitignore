@@ -1,52 +1,79 @@
-config/libre*/
-config/spotify/
-config/sublime*/
-config/google-chrome/
-config/midori/
-config/pulse/
-config/vlc/
-config/software-center/
-config/roxterm*/
-config/ranger/
-config/yelp/
-config/tilda/
-config/Atom/
-config/user-dirs*
-config/nautilus/
-config/Popcorn-Time/
-config/banshee*/
-config/unity/
-config/teamviewer/
-config/gtk*/
-config/update-notifier/
-config/unity-tweak-tool/
-config/Code/
-config/compiz*/
-config/gedit/
-config/Trolltech.conf
-config/configstore/
-config/totem/
-config/gnome-control-center/
-config/freerdp/
-config/evolutions/
-config/autostart/
-config/mc/
-config/libaccounts-glib/
-config/mimeapps.list
-config/gconf/
-config/dconf/
-vim/bundle/
-vim/.netrwhist
-vim/.vimrc.bak
-antigen/repos/
-antigen/.cache/
-antigen/antigen.log
-config/Foxit Software/
-config/vimb/cookies
-config/vimb/hsts
-config/vimb/history
-config/vimb/closed
-config/vimb/search
-config/vimb/command
-config/google-chrome-unstable/
-config/freshwrapper-data/
+# Exclude everything
+*
+
+# Include .gitignore
+!.gitignore
+
+## root directory includes ##
+
+# shell init scripts
+!bashrc
+!bash_profile
+!zshrc
+
+# X configs
+!xinitrc
+!xserverrc
+!Xresources
+!Xauthority
+
+!Xresources.d/
+!Xresources.d/**
+
+!Xsession.d/
+!Xsession.d/**
+
+# Setup/Install scripts
+!setup.sh
+!install.sh
+
+!dependencies/
+!dependencies/**
+
+# Misc files
+!vimrc
+
+
+## .xmonad includes ##
+!xmonad
+!xmonad/background.png
+!xmonad/xmonad.hs
+
+
+## .antigen includes ##
+!antigen
+!antigen/custom/
+!antigen/custom/**
+
+
+## .config includes ##
+!config
+
+!config/vimb
+!config/vimb/config
+
+!config/awesome/
+!config/awesome/**
+
+!config/fish/
+!config/fish/**
+
+!config/omf/
+!config/omf/**
+
+!config/nvim
+
+!config/i3/
+!config/i3/**
+
+!config/luakit/
+!config/luakit/**
+
+
+## .vim includes ##
+!vim
+!vim/after/
+!vim/after/**
+!vim/init.vim
+!vim/setup.sh
+!vim/vimrc
