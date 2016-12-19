@@ -19,7 +19,7 @@ function prompt_git_info() {
     else
         local color=yellow
     fi
-    echo "%{$fg_bold[blue]%}|%{$reset_color%}[git:%{$fg_bold[$color]%}$branch%{$reset_color%}]"
+    echo "%{$fg_bold[blue]%}|%{$fg[red]%}[git:%{$fg_bold[$color]%}$branch%{$fg[red]%}]%{$reset_color%}"
 }
 
 function prompt_color() {
