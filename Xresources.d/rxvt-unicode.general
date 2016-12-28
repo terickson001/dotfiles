@@ -5,3 +5,5 @@ urxvt*font: xft:Terminess\ Powerline:style=Regular:size=12
 urxvt*scrollTtyOutput: false
 urxvt*scrollWithBuffer: true
 urxvt*scrollTtyKeypress: true
+
+urxvt.keysym.C-semicolon: \033[;

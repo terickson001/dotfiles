@@ -32,7 +32,7 @@
 
 # Misc files
 !vimrc
-
+!vimperatorrc
 
 ## .xmonad includes ##
 !xmonad
