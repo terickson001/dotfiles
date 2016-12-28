@@ -376,7 +376,7 @@ awful.rules.rules = {
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
-                     honor_size_hints = false,
+                     size_hints_honor = false,
                      raise = true,
                      screen = awful.screen.focused,
                      keys = clientkeys,
