@@ -137,7 +137,6 @@ let g:ctrlp_cmd = 'CtrlP'
 
 inoremap <C-;> <C-o>:call NERDComment(0,"toggle")<CR>
 
-set runtimepath
 nnoremap <Leader>s :SyntasticToggleMode<CR>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatusLineFlag()}
