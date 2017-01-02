@@ -16,7 +16,7 @@ urxvtd -q -o -f
 xset -s off
 xset -dpms
 
-session=${1:-awesome}
+session=${1:-i3}
 
 case $session in
     awesome ) exec awesome;;

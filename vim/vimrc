@@ -1,5 +1,5 @@
-
 syntax on
+
 "" Vundle Setup
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -52,6 +52,7 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'jnurmine/Zenburn'
 Plugin 'rakr/vim-one'
 Plugin 'chriskempson/base16-vim'
+Plugin 'bayQua'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -77,12 +78,13 @@ set cul ts=4 sw=4 et hls dg
 if !has("gui_running")
     set term=xterm-256color
     let g:base16colorspace="256"
+    let g:base16_shell_path="/usr/share/base16/shell"
     set t_Co=256
     set t_ZH=[3m
     set t_ZR=[23m
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    colorscheme base16-ocean
+    colorscheme base16-muted
 
     set mouse=a
 else

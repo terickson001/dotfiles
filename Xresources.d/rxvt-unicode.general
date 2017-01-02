@@ -6,4 +6,6 @@ urxvt*scrollTtyOutput: false
 urxvt*scrollWithBuffer: true
 urxvt*scrollTtyKeypress: true
 
+urxvt*.foreground: #BFBEC3
+urxvt*.background: #12171F
 urxvt.keysym.C-semicolon: \033[;

@@ -1,0 +1,20 @@
+! ! Base-16 Muted
+ URxvt.foreground:  #bfbec3
+ URxvt.background:  #12171f
+ URxvt.cursorColor: #bfbec3
+ URxvt.color0:      #12171f
+ URxvt.color1:      #ff7770
+ URxvt.color2:      #87be8a
+ URxvt.color3:      #e8ac82
+ URxvt.color4:      #acb2f2
+ URxvt.color5:      #c491c7
+ URxvt.color6:      #9adce6
+ URxvt.color7:      #bfbec3
+ URxvt.color8:      #435573
+ URxvt.color9:      #ff7770
+ URxvt.color10:     #87be8a
+ URxvt.color11:     #e8ac82
+ URxvt.color12:     #acb2f2
+ URxvt.color13:     #c491c7
+ URxvt.color14:     #9adce6
+ URxvt.color15:     #d4d3d9

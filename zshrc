@@ -3,9 +3,7 @@
 
 source /usr/share/zsh/scripts/antigen/antigen.zsh
 
-source /usr/share/base16/shell/base16-ocean.dark.sh
-
-source $HOME/.antigen/custom/colors
+source /usr/share/base16/shell/base16-muted.dark.sh
 
 bindkey -e
 
@@ -19,7 +17,7 @@ function prompt_git_info() {
     else
         local color=yellow
     fi
-    echo "%{$fg_bold[blue]%}|%{$fg[red]%}[git:%{$fg_bold[$color]%}$branch%{$fg[red]%}]%{$reset_color%}"
+    echo "|[git:$branch]"
 }
 
 function prompt_color() {
@@ -35,8 +33,9 @@ function prompt_color() {
 
 setopt PROMPT_SUBST 
 
-PROMPT='%{$fg_bold[$(prompt_color)]%}>%{$reset_color%} ' 
+PROMPT='>' 
 RPROMPT='%~$(prompt_git_info)'
+
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
@@ -48,5 +47,6 @@ alias ":q"=exit
 alias "edit"=$EDITOR
 alias ":e"="edit"
 alias ":qa"="pkill -9 urxvt"
+alias "yi"="yi --frontend vty --keymap vim"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"

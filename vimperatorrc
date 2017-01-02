@@ -40,6 +40,7 @@ highlight Tag color: #a0a0d0;
 highlight Title color: orchid; background: #1c1c1c; font-weight: bold;
 highlight URL text-decoration: none; color: #d0ffd0;
 highlight WarningMsg color: #ff0000; background: #1c1c1c; font-size: 12px;
+nnoremap "\\cls" /<Space><BS><Esc>
 style! -name=indigo-feed-button chrome://* <<EOF
 #feed-button {
         list-style-image: url("chrome://browser/skin/feeds/feedIcon16.png") !important;
@@ -54,6 +55,6 @@ style! -name=indigo-sbmcommentsviewer chrome://* <<EOF
         border: none !important;
     }
 EOF
-source! /home/tyler/.vimperatorrc.local
+source! ~/dotfiles/vimperatorrc.local
 
 " vim: set ft=vimperator:
