@@ -78,13 +78,12 @@ set cul ts=4 sw=4 et hls dg
 if !has("gui_running")
     set term=xterm-256color
     let g:base16colorspace="256"
-    let g:base16_shell_path="/usr/share/base16/shell"
     set t_Co=256
     set t_ZH=[3m
     set t_ZR=[23m
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    colorscheme base16-muted
+    colorscheme base16-default-dark
 
     set mouse=a
 else
@@ -150,14 +149,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = {'mode': 'passive'}
 
-"iunmap <Leader> (Causes )
+"iunmap <Leader> (Causes Delay when typing '\' in insert mode)
 au VimEnter *
     \ iunmap \ihn|
     \ iunmap \is|
     \ iunmap \ih
 
-"nnoremap <Leader>\ <Plug>(easymotion-prefix)
-"vnoremap <Leader>\ <Plug>(easymotion-prefix)
 " Syntax highlighting group under cursor
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
