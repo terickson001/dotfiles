@@ -136,7 +136,7 @@ let g:netrw_winsize=15
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-inoremap <C-;> <C-o>:call NERDComment(0,"toggle")<CR>
+imap <C-;> <Plug>NERDCommenterInsert
 
 nnoremap <Leader>s :SyntasticToggleMode<CR>
 set statusline+=%#warningmsg#
@@ -148,6 +148,12 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = {'mode': 'passive'}
+
+let g:NERDAltDelims_haskell = 1
+let g:NERDSpaceDelims = 1
+let g:NERDRemoveExtraSpaces = 1
+let g:NERDDefaultNesting = 0
+
 
 "iunmap <Leader> (Causes Delay when typing '\' in insert mode)
 au VimEnter *
@@ -188,3 +194,6 @@ au BufNewFile,BufRead *.cassius set filetype=cassius ts=4 et sts=4 sw=4
 au BufNewFile,BufRead *.julius set filetype=julius ts=4 et sts=4 sw=4
 
 au BufEnter,InsertLeave * syntax sync fromstart
+
+" NASM filetype recognition
+au BufNewFile,BufRead *.nasm set filetype=nasm

@@ -71,6 +71,9 @@
 !config/luakit/
 !config/luakit/**
 
+!config/polybar/
+!config/polybar/**
+
 
 ## .vim includes ##
 !vim

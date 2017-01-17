@@ -3,7 +3,7 @@
 
 source /usr/share/zsh/scripts/antigen/antigen.zsh
 
-source $HOME/.colors/base16-muted.sh
+source $HOME/.colors/base16-muted2.sh
 
 bindkey -e
 

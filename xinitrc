@@ -11,10 +11,15 @@ if [[ -x /usr/bin/synclient ]]; then
     synclient TapButton2=2
     synclient TapButton3=3
 fi
+
 xrdb ~/.Xresources
 urxvtd -q -o -f
 xset -s off
 xset -dpms
+
+mopidy &
+
+[[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display
 
 session=${1:-i3}
 
