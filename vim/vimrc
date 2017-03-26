@@ -27,6 +27,7 @@ Plugin 'valloric/YouCompleteMe'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
+Plugin 'rargo/vim-tab'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -43,6 +44,7 @@ Plugin 'raichoo/haskell-vim'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'sophacles/vim-processing'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -95,7 +97,6 @@ else
     set guioptions-=L "remove left-hand scrollbar
 endif
 
-
 set number
 set nowrap
 
@@ -104,6 +105,8 @@ set updatetime=2000
 
 set ignorecase
 set smartcase
+
+set nodigraph
 
 " Language-Specific settings
 au Filetype python set ts=4 sw=4 et
@@ -197,3 +200,42 @@ au BufEnter,InsertLeave * syntax sync fromstart
 
 " NASM filetype recognition
 au BufNewFile,BufRead *.nasm set filetype=nasm
+
+" Processing filetype settings (.pde)
+au BufNewFile,BufRead *.pde set filetype=processing ts=2 et sts=2 sw=2
+
+" Vim-Tab Settings
+let g:NERDTreeChDirMode=2
+
+"below is reload GTAGS, ctags demo code.
+function! TabReloadCGtag()
+	"reload GTAGS in current directory
+	cs kill 0
+	"gnu global produce GTAGS, more useful than cscope
+	cs add GTAGS
+	"reload tags in current directory
+	set tags=tags
+endfunction
+
+"some action when enter a tab
+function! TabEnterTag(nr)
+	"echo "tab ". a:nr . " enter"
+	call TabReloadCGtag()
+endfunction
+
+"some action when leave a tab
+function! TabLeaveTag(nr)
+	"echo "tab ". a:nr . " leaves"
+	"nothing
+endfunction
+
+"don't care about pattern field for now
+let g:TabTagTrigger = {'name':'TabTagTriger','pattern':"", 'enter_callback':"TabEnterTag", 'leave_callback':"TabLeaveTag" }
+
+"call tab#TabShowTrigger()
+call tab#TabAddTrigger(g:TabTagTrigger)
+
+"when first open a tab, the tab enter trigger will not be called,the following code load tags automatically when open a file
+autocmd BufEnter *.[ch] call TabReloadCGtag()
+autocmd BufEnter *.cpp call TabReloadCGtag()
+autocmd BufEnter *.java call TabReloadCGtag()

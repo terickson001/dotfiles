@@ -1,4 +1,4 @@
-"3.15.0 (created: 2016/10/05 01:11:26)
+"3.16.0 (created: 2017/02/01 00:55:15)
 
 highlight Bell border: none; background-color: #d0d0d0;
 highlight Boolean color: orchid;
@@ -41,6 +41,7 @@ highlight Title color: orchid; background: #1c1c1c; font-weight: bold;
 highlight URL text-decoration: none; color: #d0ffd0;
 highlight WarningMsg color: #ff0000; background: #1c1c1c; font-size: 12px;
 nnoremap "\\cls" /<Space><BS><Esc>
+set focuscontent
 style! -name=indigo-feed-button chrome://* <<EOF
 #feed-button {
         list-style-image: url("chrome://browser/skin/feeds/feedIcon16.png") !important;
@@ -55,6 +56,6 @@ style! -name=indigo-sbmcommentsviewer chrome://* <<EOF
         border: none !important;
     }
 EOF
-source! ~/dotfiles/vimperatorrc.local
+source! /home/tyler/.vimperatorrc.local
 
 " vim: set ft=vimperator:

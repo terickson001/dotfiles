@@ -1,7 +1,8 @@
 #! /usr/bin/env zsh
 # ~/.zshrc
 
-source /usr/share/zsh/scripts/antigen/antigen.zsh
+source /usr/share/zsh/share/antigen.zsh
+source $HOME/.antigen/custom/colors
 
 source $HOME/.colors/base16-muted2.sh
 
@@ -17,7 +18,8 @@ function prompt_git_info() {
     else
         local color=yellow
     fi
-    echo "|[git:$branch]"
+    # echo "|[git:$branch]"
+    echo "%{$fg_bold[blue]%}|%{$fg[red]%}[git:%{$fg_bold[$color]%}$branch%{$fg[red]%}]%{$reset_color%}"
 }
 
 function prompt_color() {
@@ -33,7 +35,8 @@ function prompt_color() {
 
 setopt PROMPT_SUBST 
 
-PROMPT='>' 
+# PROMPT='>' 
+PROMPT='%{$fg_bold[$(prompt_color)]%}>%{$reset_color%} ' 
 RPROMPT='%~$(prompt_git_info)'
 
 
