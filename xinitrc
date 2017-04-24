@@ -17,6 +17,10 @@ urxvtd -q -o -f
 xset -s off
 xset -dpms
 
+if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
+    xmodmap $HOME/.config/xmodmap/xmodmap.config
+fi
+
 mopidy &
 
 [[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display

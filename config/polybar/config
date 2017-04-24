@@ -87,7 +87,7 @@ font-2 = siji:pixelsize=10
 
 modules-left = bspwm i3 mpd
 modules-center = xwindow
-modules-right = xbacklight volume memory cpu wlan eth battery temperature date powermenu
+modules-right = backlight-acpi volume memory cpu wlan eth battery temperature date powermenu
 
 tray-position = right
 tray-padding = 2
