@@ -54,3 +54,5 @@ alias "yi"="yi --frontend vty --keymap vim"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
+
+antigen apply
