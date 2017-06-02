@@ -11,9 +11,11 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " General Plugins
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-abolish'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'bling/vim-airline'
 Plugin 'yggdroot/indentline'
@@ -28,6 +30,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'rargo/vim-tab'
+Plugin 'chiedo/vim-case-convert'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -45,6 +48,7 @@ Plugin 'eagletmt/neco-ghc'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'sophacles/vim-processing'
+Plugin 'brainfuck-syntax'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -86,8 +90,6 @@ if !has("gui_running")
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
     colorscheme base16-default-dark
-
-    set mouse=a
 else
     colorscheme base16-ocean
     set background=dark
@@ -98,6 +100,7 @@ else
 endif
 
 set number
+set relativenumber
 set nowrap
 
 set showcmd
@@ -130,7 +133,7 @@ nnoremap <Leader>tr :%s/\s*$//g<CR>:let @/=""<CR>
 " .h <-> .c
 nnoremap <F4> :A<CR>
 " netrw settings
-nnoremap <F2> :Lexplore<CR>
+nnoremap <silent> <special> <F2> :if &filetype ==# 'nerdtree' <Bar> :NERDTreeToggle <Bar> :else <Bar> :NERDTreeFocus <Bar> :endif<CR>
 
 let g:netrw_usetab=1
 let g:netrw_liststyle=3
@@ -204,29 +207,32 @@ au BufNewFile,BufRead *.nasm set filetype=nasm
 " Processing filetype settings (.pde)
 au BufNewFile,BufRead *.pde set filetype=processing ts=2 et sts=2 sw=2
 
+" Brainfuck filetype recognition
+au BufNewFile,BufRead *.b set filetype=brainfuck
+
 " Vim-Tab Settings
 let g:NERDTreeChDirMode=2
 
 "below is reload GTAGS, ctags demo code.
 function! TabReloadCGtag()
-	"reload GTAGS in current directory
-	cs kill 0
-	"gnu global produce GTAGS, more useful than cscope
-	cs add GTAGS
-	"reload tags in current directory
-	set tags=tags
+    "reload GTAGS in current directory
+    cs kill 0
+    "gnu global produce GTAGS, more useful than cscope
+    cs add GTAGS
+    "reload tags in current directory
+    set tags=tags
 endfunction
 
 "some action when enter a tab
 function! TabEnterTag(nr)
-	"echo "tab ". a:nr . " enter"
-	call TabReloadCGtag()
+    "echo "tab ". a:nr . " enter"
+    call TabReloadCGtag()
 endfunction
 
 "some action when leave a tab
 function! TabLeaveTag(nr)
-	"echo "tab ". a:nr . " leaves"
-	"nothing
+    "echo "tab ". a:nr . " leaves"
+    "nothing
 endfunction
 
 "don't care about pattern field for now

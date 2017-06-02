@@ -1,10 +1,5 @@
 #!/bin/sh
-
 # ~/.xinitrc
-#
-# global xinitrc file, used by all X sessions started by xinit (startx)
-
-# invoke global X session script
 
 if [[ -x /usr/bin/synclient ]]; then
     synclient TapButton1=1
@@ -16,6 +11,8 @@ xrdb ~/.Xresources
 urxvtd -q -o -f
 xset -s off
 xset -dpms
+
+ntpd -qg
 
 if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
     xmodmap $HOME/.config/xmodmap/xmodmap.config

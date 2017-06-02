@@ -1,10 +1,11 @@
 urxvt*scrollBar: false
 urxvt*cursorBlink: 1
-urxvt*font: xft:Terminess\ Powerline:style=Regular:size=12
+urxvt*font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13
 
 urxvt*scrollTtyOutput: false
 urxvt*scrollWithBuffer: true
 urxvt*scrollTtyKeypress: true
+urxvt*secondaryScroll: false
 
 urxvt*.foreground: #BFBEC3
 urxvt*.background: #12171F
