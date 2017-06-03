@@ -1,0 +1,34 @@
+#! /usr/bin/env bash
+
+if [ "$1" = "" ]; then
+    echo No workspace number passed
+    exit 1
+fi
+
+workspaces=$(i3-msg -t get_workspaces)
+
+current_display=$(echo -e "${workspaces//\},{/\}\\n{}" | egrep "\"focused\":true" | egrep -o "\"output\":.*," | cut -d "\"" -f 4)
+#"
+#^^ Syntax highlighting problem, needed an end quote for some reason
+
+displays=($(xrandr -q | egrep "^.* connected" | cut -d " " -f 1))
+primary=$(xrandr -q | egrep "^.* primary" | cut -d " " -f 1)
+
+for i in ${!displays[@]}; do
+    if [ "${displays[$i]}" = "$primary" ]; then
+        displays[$i]=''
+    fi
+done
+
+display_index=-1
+if [ $current_display = $primary ]; then
+    display_index=0
+else
+    for i in ${!displays[@]}; do
+        if [ "${displays[$i]}" = "$current_display" ]; then
+            display_index=$((i+1))
+        fi
+    done
+fi
+
+echo "$1:$display_index"

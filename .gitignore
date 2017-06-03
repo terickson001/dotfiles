@@ -35,6 +35,8 @@
 !colors/**
 !vimrc
 !vimperatorrc
+!bin/
+!bin/**
 
 ## .xmonad includes ##
 !xmonad

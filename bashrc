@@ -117,15 +117,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias motivate='fortune | cowsay | lolcat'
-alias qmeDir='cd /media/Daysheets/Chen/QME\ Folder/QME\ Patients/'
-
-
 xinput set-prop 12 "Synaptics Finger" 50 90 255
 xinput set-prop 12 "Synaptics Noise Cancellation" 20 20
 
-export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
-export WSHOME="/media/CommonArea/.Folders Employees/Tyler"
-export QME="/media/Daysheets/Chen/QME Folder/QME Patients"
+export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin:$HOME/.bin
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+# Currently only handles horizontal layouts
+
+displays=($(xrandr -q | egrep "^.* connected" | cut -d " " -f 1))
+positions_x=($(xrandr -q | egrep "^.* connected" | egrep -o "\+\w+\+\w+" | sed "s/^+//;s/+/ /" | cut -d " " -f 1))
+positions_y=($(xrandr -q | egrep "^.* connected" | egrep -o "\+\w+\+\w+" | sed "s/^+//;s/+/ /" | cut -d " " -f 2))
+
+display_order=()
+
+for i in ${!positions_x[@]}; do
+    counter=0
+    current_x=${positions_x[$i]}
+    for j in ${!positions_x[@]}; do
+        if [ $i -eq $j ]; then
+            continue
+        fi
+        if (( $current_x > ${positions_x[$j]} )); then
+            counter=$((counter+1))
+        fi
+    done
+    display_order[$i]=$counter
+done
+
+declare -a sorted_displays=( $(for i in {1..${#displays[@]}}; do echo 0; done) )
+
+for i in ${!display_order[@]}; do
+    index=${display_order[$i]}
+    sorted_displays[$index]=${displays[$i]}
+done
+
+echo ${sorted_displays[@]}

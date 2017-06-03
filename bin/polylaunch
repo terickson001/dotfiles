@@ -1,0 +1,9 @@
+#! /usr/bin/env zsh
+
+killall -q polybar
+
+
+for display in $(xrandr -q | egrep "^\w.* connected" | cut -d ' ' -f 1); do
+    MONITOR=$display polybar example &
+done
+# MONITOR=$(xrandr -q | grep "primary" | cut -d ' ' -f1) polybar example & 

@@ -9,8 +9,10 @@ fi
 
 xrdb ~/.Xresources
 urxvtd -q -o -f
-xset -s off
+xset s off
 xset -dpms
+
+xsetroot -solid "#12171f"
 
 ntpd -qg
 
