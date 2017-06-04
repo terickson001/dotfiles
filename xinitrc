@@ -11,6 +11,7 @@ xrdb ~/.Xresources
 urxvtd -q -o -f
 xset s off
 xset -dpms
+numlockx on
 
 xsetroot -solid "#12171f"
 

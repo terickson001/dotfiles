@@ -122,6 +122,42 @@ bindsym $mod+Shift+8 exec i3-msg "move container to workspace $(multihead_getWor
 bindsym $mod+Shift+9 exec i3-msg "move container to workspace $(multihead_getWorkspace 9)"
 bindsym $mod+Shift+0 exec i3-msg "move container to workspace $(multihead_getWorkspace 10)"
 
+# switch to output
+bindsym $mod+Ctrl+1 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 1)"
+bindsym $mod+Ctrl+2 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 2)"
+bindsym $mod+Ctrl+3 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 3)"
+bindsym $mod+Ctrl+4 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 4)"
+bindsym $mod+Ctrl+5 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 5)"
+bindsym $mod+Ctrl+6 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 6)"
+bindsym $mod+Ctrl+7 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 7)"
+bindsym $mod+Ctrl+8 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 8)"
+bindsym $mod+Ctrl+9 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 9)"
+bindsym $mod+Ctrl+0 exec i3-msg "focus output $(multihead_getMonitorOrder | cut -d ' ' -f 10)"
+
+bindsym $mod+Ctrl+Left focus output left
+bindsym $mod+Ctrl+Right focus output right
+
+bindsym $mod+Ctrl+h focus output left
+bindsym $mod+Ctrl+l focus output right
+
+# move focused container to output
+bindsym $mod+Shift+Ctrl+1 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 1)"
+bindsym $mod+Shift+Ctrl+2 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 2)"
+bindsym $mod+Shift+Ctrl+3 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 3)"
+bindsym $mod+Shift+Ctrl+4 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 4)"
+bindsym $mod+Shift+Ctrl+5 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 5)"
+bindsym $mod+Shift+Ctrl+6 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 6)"
+bindsym $mod+Shift+Ctrl+7 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 7)"
+bindsym $mod+Shift+Ctrl+8 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 8)"
+bindsym $mod+Shift+Ctrl+9 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 9)"
+bindsym $mod+Shift+Ctrl+0 exec i3-msg "move container to output $(multihead_getMonitorOrder | cut -d ' ' -f 10)"
+
+bindsym $mod+Shift+Ctrl+Left move container to output left
+bindsym $mod+Shift+Ctrl+Right move container to output right
+
+bindsym $mod+Shift+Ctrl+h move container to output left
+bindsym $mod+Shift+Ctrl+l move container to output right
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
