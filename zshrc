@@ -54,5 +54,6 @@ alias "yi"="yi --frontend vty --keymap vim"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin"
 # export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
+export wallpaper="$HOME/dotfiles/wallpapers/analog_chicken.jpg"
 
 antigen apply

@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+
+#Disgusting one-liner born of boredom
+
+echo $(xrandr -q | egrep ".* connected" | sort -k3 -r | { { tee /dev/fd/3 | cut -d $'\n' -f 1 >&4; } 3>&1 | cut -d $'\n' -f 2- | tac 4>&-; } 4>&1 | cut -d " " -f 1)
+
+#Wow, coming back to it.... what have I done?
+#I'm almost positive I'll forget how that bracketed bit works.

@@ -1,9 +1,8 @@
-#! /usr/bin/env zsh
+#! /usr/bin/env bash
 
 killall -q polybar
 
 
-for display in $(xrandr -q | egrep "^\w.* connected" | cut -d ' ' -f 1); do
+for display in $(multihead_getPrimaryMonitorOrder); do
     MONITOR=$display polybar example &
 done
-# MONITOR=$(xrandr -q | grep "primary" | cut -d ' ' -f1) polybar example & 
