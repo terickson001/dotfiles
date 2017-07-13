@@ -37,6 +37,8 @@
 !vimperatorrc
 !bin/
 !bin/**
+!wallpapers/
+!wallpapers/SOURCES
 
 ## .xmonad includes ##
 !xmonad

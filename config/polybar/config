@@ -88,7 +88,7 @@ modules-left = bspwm i3 mpd
 modules-center = xwindow
 modules-right = backlight-acpi volume memory cpu wlan eth battery temperature date powermenu
 
-tray-position = right
+tray-position = ${env:TRAY}
 tray-padding = 2
 ;tray-transparent = true
 ;tray-background = #0063ff

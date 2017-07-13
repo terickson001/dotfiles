@@ -1,5 +1,4 @@
-vimb-git
-awesome-git
+i3-gaps-git
 tabbed
 rxvt-unicode
 gnu-free-fonts
@@ -11,3 +10,10 @@ rofi-git
 rofi-dmenu
 xcompmgr
 xdotool
+ibus
+ibus-mozc
+polybar
+feh
+gvim
+firefox
+siji-git

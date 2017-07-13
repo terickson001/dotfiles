@@ -17,6 +17,7 @@ set $mod Mod4
 
 # exec_always --no-startup-id xsetroot -solid "#12171f"
 exec_always --no-startup-id polylaunch
+exec multihead_initWorkspaces
 # exec --no-startup-id xsetroot -solid "#2f343f"
 
 new_window pixel 0
@@ -204,19 +205,19 @@ bindsym $mod+r mode "resize"
 # from the generated scheme.
 # NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
 # it fails to get colors from Xresources for some reason.
-set_from_resource $fg i3wm.color7 #f0f0f0
-set_from_resource $bg i3wm.color2 #f0f0f0
+# set_from_resource $fg i3wm.color7 #f0f0f0
+# set_from_resource $bg i3wm.color2 #f0f0f0
 
 # class                 border  backgr. text indicator child_border
-client.focused          $bg     $bg     $fg  $bg       $bg
-client.focused_inactive $bg     $bg     $fg  $bg       $bg
-client.unfocused        $bg     $bg     $fg  $bg       $bg
-client.urgent           $bg     $bg     $fg  $bg       $bg
-client.placeholder      $bg     $bg     $fg  $bg       $bg
+# client.focused          $bg     $bg     $fg  $bg       $bg
+# client.focused_inactive $bg     $bg     $fg  $bg       $bg
+# client.unfocused        $bg     $bg     $fg  $bg       $bg
+# client.urgent           $bg     $bg     $fg  $bg       $bg
+# client.placeholder      $bg     $bg     $fg  $bg       $bg
 
-client.background       $bg
-# client.focused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
-# client.unfocused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
+# client.background       $bg
+client.focused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
+client.unfocused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
 
 # Gaps
 gaps outer 5

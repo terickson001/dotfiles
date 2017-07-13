@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+monitors=($(multihead_getPrimaryMonitorOrder))
+for d in ${monitors[@]}; do
+    i3-msg "focus output $d"
+    i3-msg "workspace $(multihead_getWorkspace 1)"
+done
+
+i3-msg "focus output ${monitors[0]}"
+

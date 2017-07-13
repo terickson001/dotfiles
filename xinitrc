@@ -7,12 +7,21 @@ if [[ -x /usr/bin/synclient ]]; then
     synclient TapButton3=3
 fi
 
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+ibus-daemon -rdx
+
 xrdb ~/.Xresources
 urxvtd -q -o -f
 xset s off
 xset -dpms
 numlockx on
+xcompmgr &
 
+feh --no-xinerama -bg-center "$HOME/dotfiles/wallpapers/window.png"
 xsetroot -solid "#12171f"
 
 ntpd -qg

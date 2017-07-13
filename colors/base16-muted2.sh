@@ -54,22 +54,22 @@ else
 fi
 
 # 16 color space
-printf $printf_template 0  $color00
-printf $printf_template 1  $color01
-printf $printf_template 2  $color02
-printf $printf_template 3  $color03
-printf $printf_template 4  $color04
-printf $printf_template 5  $color05
-printf $printf_template 6  $color06
-printf $printf_template 7  $color07
-printf $printf_template 8  $color08
-printf $printf_template 9  $color09
-printf $printf_template 10 $color10
-printf $printf_template 11 $color11
-printf $printf_template 12 $color12
-printf $printf_template 13 $color13
-printf $printf_template 14 $color14
-printf $printf_template 15 $color15
+# printf $printf_template 0  $color00
+# printf $printf_template 1  $color01
+# printf $printf_template 2  $color02
+# printf $printf_template 3  $color03
+# printf $printf_template 4  $color04
+# printf $printf_template 5  $color05
+# printf $printf_template 6  $color06
+# printf $printf_template 7  $color07
+# printf $printf_template 8  $color08
+# printf $printf_template 9  $color09
+# printf $printf_template 10 $color10
+# printf $printf_template 11 $color11
+# printf $printf_template 12 $color12
+# printf $printf_template 13 $color13
+# printf $printf_template 14 $color14
+# printf $printf_template 15 $color15
 
 # 256 color space
 printf $printf_template 16 $color16
@@ -80,20 +80,20 @@ printf $printf_template 20 $color20
 printf $printf_template 21 $color21
 
 # foreground / background / cursor color
-if [ -n "$ITERM_SESSION_ID" ]; then
+# if [ -n "$ITERM_SESSION_ID" ]; then
   # iTerm2 proprietary escape codes
-  printf $printf_template_custom Pg c0c5ce # forground
-  printf $printf_template_custom Ph 2b303b # background
-  printf $printf_template_custom Pi c0c5ce # bold color
-  printf $printf_template_custom Pj 4f5b66 # selection color
-  printf $printf_template_custom Pk c0c5ce # selected text color
-  printf $printf_template_custom Pl c0c5ce # cursor
-  printf $printf_template_custom Pm 2b303b # cursor text
-else
-  printf $printf_template_var 10 $color_foreground
-  printf $printf_template_var 11 $color_background
-  printf $printf_template_custom 12 ";7" # cursor (reverse video)
-fi
+  # printf $printf_template_custom Pg c0c5ce # forground
+  # printf $printf_template_custom Ph 2b303b # background
+  # printf $printf_template_custom Pi c0c5ce # bold color
+  # printf $printf_template_custom Pj 4f5b66 # selection color
+  # printf $printf_template_custom Pk c0c5ce # selected text color
+  # printf $printf_template_custom Pl c0c5ce # cursor
+  # printf $printf_template_custom Pm 2b303b # cursor text
+# else
+  # printf $printf_template_var 10 $color_foreground
+  # printf $printf_template_var 11 $color_background
+  # printf $printf_template_custom 12 ";7" # cursor (reverse video)
+# fi
 
 # clean up
 unset printf_template

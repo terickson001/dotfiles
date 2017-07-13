@@ -2,7 +2,13 @@
 
 killall -q polybar
 
+monitors=($(multihead_getPrimaryMonitorOrder))
 
-for display in $(multihead_getPrimaryMonitorOrder); do
-    MONITOR=$display polybar example &
+for i in ${!monitors[@]}; do
+    if [ $i -eq 0 ]; then
+        tray=right
+    else
+        tray=""
+    fi
+    MONITOR=${monitors[$i]} TRAY=$tray polybar example &
 done
