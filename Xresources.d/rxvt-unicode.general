@@ -9,7 +9,7 @@ urxvt*secondaryScroll: false
 
 urxvt*.foreground: #BFBEC3
 !urxvt*.background: #12171F
-urxvt*.background: rgba:1200/1700/1f00/e600
+urxvt*.background: rgba:1200/1800/2000/e600
 urxvt*depth: 32
 !urxvt*tintColor: #12171F
 urxvt.keysym.C-semicolon: \033[;

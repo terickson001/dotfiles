@@ -15,7 +15,8 @@ set $mod Mod4
 # is used in the bar {} block below.
 # font pango:monospace 8
 
-# exec_always --no-startup-id xsetroot -solid "#12171f"
+exec_always --no-startup-id feh --no-xinerama --bg-center ~/.wallpapers/window-full.png
+exec_always --no-startup-id xcompmgr &
 exec_always --no-startup-id polylaunch
 exec multihead_initWorkspaces
 # exec --no-startup-id xsetroot -solid "#2f343f"
@@ -220,7 +221,7 @@ client.focused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
 client.unfocused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
 
 # Gaps
-gaps outer 5
+gaps outer 10
 gaps inner 5
 
 # Multi-Media Keys

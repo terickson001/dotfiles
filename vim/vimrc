@@ -1,5 +1,5 @@
 syntax on
-
+filetype off
 "" Vundle Setup
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -31,6 +31,7 @@ Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'rargo/vim-tab'
 Plugin 'chiedo/vim-case-convert'
+Plugin 'sirver/ultisnips'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -49,6 +50,7 @@ Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'sophacles/vim-processing'
 Plugin 'brainfuck-syntax'
+Plugin 'terickson001/vim-odin'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -80,7 +82,7 @@ map! <Esc>[; <C-;>
 
 set timeout
 
-set cul ts=4 sw=4 et hls dg
+set cul ts=4 sw=4 sts=4 et hls dg
 
 if !has("gui_running")
     set term=xterm-256color
@@ -100,7 +102,7 @@ else
 endif
 
 set number
-set relativenumber
+" set relativenumber
 set nowrap
 
 set showcmd

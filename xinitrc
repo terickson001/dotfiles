@@ -19,10 +19,10 @@ urxvtd -q -o -f
 xset s off
 xset -dpms
 numlockx on
-xcompmgr &
 
-feh --no-xinerama -bg-center "$HOME/dotfiles/wallpapers/window.png"
-xsetroot -solid "#12171f"
+[[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display
+# feh --no-xinerama -bg-center "$HOME/.wallpapers/composite.png"
+# xsetroot -solid "#12171f"
 
 ntpd -qg
 
@@ -32,7 +32,6 @@ fi
 
 mopidy &
 
-[[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display
 
 session=${1:-i3}
 
