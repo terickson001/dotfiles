@@ -7,12 +7,29 @@ INTERACTIVE=false
 LIST_WALLS=false
 PATTERN="*"
 
+current=$(cat $wallpaper_dir/.current)
+if [[ $current =~ , ]]; then
+    current=$(sed ":loop; s/^\s*,/_,/g; s/,\s*,/,_,/g; s/,\s*$/,_/g; s/,\s*::/,_::/g; t loop" <<< $current)
+fi
+
+echo "Starting Interactive Mode..."
+
 function list {
-    ls -1 $wallpaper_dir/ | egrep -v "SOURCES|download_errors" | perl -lne "print \$1 if /([a-zA-Z0-9_-]*)\.[a-z]*$/" | egrep "$PATTERN"
+    ls -1 $wallpaper_dir/ | egrep -v "SOURCES|download_errors|\.current" | perl -lne "print \$1 if /([a-zA-Z0-9_-]*)\.[a-z]*$/" | egrep "$PATTERN"
 }
 
 function set_wall {
-    feh --no-xinerama --bg-fill $wallpaper_dir/$1.* 2>/dev/null 
+    if [[ $1 =~ , ]]; then
+        compile $1 | feh --no-xinerama --bg-fill -
+    elif [[ $1 =~ ^:: ]]; then
+        screen_dims=$(xrandr -q | perl -lne "print \"\$1x\$2\" if /Screen.*current\s*([0-9]*)\s*x\s*([0-9]*)/")
+        bg_color=$(perl -lne "print \$1 if /.*::(.*)/" <<< $1)
+        bg_color=${bg_color:-"#12171f"}
+        convert -size $screen_dims canvas:$bg_color jpeg:- | feh --bg-fill --no-xinerama -
+    else
+        feh --no-xinerama --bg-fill $wallpaper_dir/$1.* 2>/dev/null 
+    fi
+    echo "$1" > "$wallpaper_dir/.current"
 }
 
 function save {
@@ -28,6 +45,7 @@ function interactive {
         clear
         echo "Choose one of the following wallpapers: "
         echo -e "$(sed "$[$choice+1] s/^.*$/[37;7m&[m/" <<< $options)"
+        echo -e "\nControls:\n  ENTER: Apply wallpaper to all displays\n  [1-N]: Apply wallpaper to specific display\n  ESC: Exit"
         while read -rsn1 ui; do
             case "$ui" in
                 $'\x1b')    # Handle ESC sequence.
@@ -37,17 +55,44 @@ function interactive {
                     if [[ "$tmp" == "[" ]]; then
                         read -rsn1 -t 0.01 tmp
                         case "$tmp" in
-                            "A") [ $choice -ge 0 ] && choice=$[$choice-1];;
-                            "B") [ $choice -lt $(list | wc -l) ] && choice=$[$choice+1];;
+                            "A") [ $choice -gt 0 ] && choice=$[$choice-1];;
+                            "B") [ $[$choice+1] -lt $(list | wc -l) ] && choice=$[$choice+1];;
                         esac
+                    elif [[ "$tmp" == "" ]]; then
+                        break 2;
                     fi
                     # Flush "stdin" with 0.01  sec timeout.
                     read -rsn5 -t 0.01
-                    set_wall $(list | awk "NR==$choice+1")
                     break
                     ;;
                     # Other one byte (char) cases. Here only quit.
-                '') break 2;;
+                [1-9])
+                    monitors=($(multihead_getMonitorOrder))
+                    if [[ $ui -le ${#monitors[@]} ]]; then
+                        OLDIFS=$IFS
+                        if [[ $current =~ , ]]; then
+                            IFS=","; read -ra tmp <<< $current
+                            tmp[$ui-1]=$(list | awk "NR==$choice+1")
+                            current=$(echo "${tmp[*]}")
+                            IFS=$OLDIFS
+                        else
+                            bg="$(perl -lne "print \$1 if /.*::(.*)/" <<< $current)"
+                            declare -a tmp
+                            for ((i=0; i<${#monitors[@]}; ++i)); do
+                                if [[ $[$i+1] -eq $ui ]]; then
+                                    tmp[$i]=$(list | awk "NR==$choice+1")
+                                else
+                                    tmp[$i]="_"
+                                fi
+                            done
+                            IFS=","; current=$(echo "${tmp[*]}"); IFS=$OLDIFS
+                        fi
+                        set_wall $current
+                    fi
+                    break
+                    ;;
+                '') current=$(list | awk "NR==$choice+1"); set_wall $current; break;;
+                *)  echo "$ui"; break;;
             esac
         done      
     done
@@ -72,28 +117,86 @@ function update {
 
 function compile {
     screen_dims=$(xrandr -q | perl -lne "print \"\$1x\$2\" if /Screen.*current\s*([0-9]*)\s*x\s*([0-9]*)/")
-    monitors=$(multihead_getMonitorOrder)
+    monitors=($(multihead_getMonitorOrder))
+    bg_color=$(perl -lne "print \$1 if /.*::(.*)/" <<< $1)
+    bg_color=${bg_color:-"#12171f"}
+    walls_formatted=$(echo "$1" | sed ":loop; s/^\s*,/_,/g; s/,\s*,/,_,/g; s/,\s*$/,_/g; s/::.*$//g; t loop")
+    
+    if [[ $1 =~ ^:: ]]; then
+        >&2 echo "Setting solid wallpaper"
+        return 
+    fi
 
-    IFS="," read -ra walls <<< "$1"
+    IFS="," read -ra walls <<< "$walls_formatted"
     if [ ${#monitors[@]} -ne ${#walls[@]} ]; then
-        echo "ERROR: Given number of wallpapers doesn't match number of monitors"
+        >&2 echo "ERROR: Given number of wallpapers doesn't match number of monitors"
         exit
     fi
 
-    magick_command="convert -size $screen_dims canvas:#12171f"
+    magick_command="convert -size $screen_dims canvas:$bg_color"
     for ((i=0; i<${#monitors[@]}; ++i)); do
+        if [[ ${walls[i]} = "_" ]]; then
+            continue;
+        fi
         wall_file=$wallpaper_dir/${walls[i]}.*
         monitor_dims=$(xrandr -q | perl -lne "print \$1 if /${monitors[i]}.*\s([0-9]+x[0-9]+)/")
         monitor_offset=$(xrandr -q | perl -lne "print \$1 if /${monitors[i]}.*\s[0-9]+x[0-9]+(\+[0-9]+\+[0-9]+)\s/")
 
-        magick_command+=" \( $wall_file -geometry $monitor_dims^$monitor_offset -gravity center -crop $monitor_dims+0+0 -gravity none \) -composite"
+        magick_command+=" ( $wall_file -geometry $monitor_dims^$monitor_offset -gravity center -crop $monitor_dims+0+0 -gravity none ) -composite"
     done
 
     magick_command+=" jpeg:-"
     exec $magick_command
 }
 
-TEMP=$(getopt -o "lsip:u" --long "list,save,interactive,pattern:,update" -n "wallpaper" -- "$@")
+function usage {
+cat << EOF
+wallpaper: wallpaper [-ilsu] [--pattern <pattern>] [wallpaper_setting]
+    Options:
+        -i, --interactive       Start the script in interactive mode. 
+                                allows for live viewing of wallpapers
+
+        -l, --list              Show a list of wallpapers found in the
+                                wallpaper directory. 
+                                (Currently set to ~/.wallpapers/)
+
+        -s, --save              Save the chosen wallpaper to ~/.config/local
+
+        -u, --update            Update the wallpapers in ~/.wallpapers using
+                                the SOURCES file.
+
+        -p, --pattern <pattern> Filter the output of --list and the choices
+                                in --interactive mode using the regex <pattern>
+
+    Wallpaper Setting:
+        <wallpaper>[,...][::<bg_color]
+            <wallpaper>:        The name of the wallpaper in ~/.wallpapers,
+                                without a file extension
+
+            <bg_color>:         A Hexadecimal color code to set as the
+                                background color for displays with no
+                                wallpaper set. (Default: #12171f)
+        
+        For multi-monitor setups additional wallpapers can be set for each
+        display separated by commas
+            e.g.: wall1,wall2,wall3
+        
+        wallpaper fields can be left blank, leaving that monitor with
+        just the <bg_color>
+            e.g: ,wall2,::#12171f
+
+        If you just want to set a solid wallpaper for one monitor you
+        can simply use:
+            ::<bg_color>
+    
+    NOTE: This currently utilizes some local scripts, namely:
+            multihead_getMonitorOrder
+            local_var
+
+EOF
+}
+
+TEMP=$(getopt -o "lsip:uh" --long "list,save,interactive,pattern:,update,help" -n "wallpaper" -- "$@")
 eval set -- "$TEMP"
 
 while true; do
@@ -103,6 +206,7 @@ while true; do
         -i|--interactive) INTERACTIVE=true; shift;;
         -p|--pattern) PATTERN=$2; shift 2;;
         -u|--updated) update; shift;;
+        -h|--help) usage; shift;;
         --) shift; break;;
     esac
 done
@@ -113,11 +217,7 @@ if $LIST_WALLS; then
 elif $INTERACTIVE; then
     interactive
 else
-    if [[ $1 =~ , ]]; then
-        set_wall <(compile $1)
-    else
-        set_wall $1
-    fi
+    set_wall $1
     if $SAVE; then
         save $1
     fi
