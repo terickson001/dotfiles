@@ -15,7 +15,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # font pango:monospace 8
 
-exec_always --no-startup-id feh --no-xinerama --bg-center ~/.wallpapers/window-full.png
+exec_always --no-startup-id wallpaper $(local_var wallpaper)
 exec_always --no-startup-id xcompmgr &
 exec_always --no-startup-id polylaunch
 exec multihead_initWorkspaces

@@ -1,0 +1,37 @@
+#! /usr/bin/env bash
+
+function put {
+    var=$1
+    val=$2
+    line=$(grep -n "$var=" ~/.config/local | cut -f1 -d:)
+    
+    if [[ $line -eq "" ]]; then
+        echo "$var=$val" >> ~/.config/local
+    else
+        sed -i "$line s/=.*/=$val/" ~/.config/local
+    fi
+    exit
+}
+
+function get {
+    cat ~/.config/local | perl -lne "print \$1 if /^$1=(.*)/"
+    exit
+}
+
+function remove {
+    var=$1
+    sed -i "/$var=.*/d" ~/.config/local
+    exit
+}
+
+if [[ $1 =~ ^-[a-zA-Z0-9_-] ]]; then
+    var=$(tail -c+2 <<< $1)
+    remove $var
+elif [[ $1 =~ ^\+{0,1}[a-zA-Z0-9_-].*=.*$ ]]; then
+    temp=$(cut -f2- -d+ <<< $1)
+    var=$(cut -f1 -d= <<< $temp)
+    val=$(cut -f2- -d= <<< $temp)
+    put $var $val
+else
+    get $1
+fi

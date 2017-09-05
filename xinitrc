@@ -21,13 +21,11 @@ xset -dpms
 numlockx on
 
 [[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display
-# feh --no-xinerama -bg-center "$HOME/.wallpapers/composite.png"
-# xsetroot -solid "#12171f"
 
 ntpd -qg
 
 if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
-    xmodmap $HOME/.config/xmodmap/xmodmap.config
+    sleep 1 && xmodmap $HOME/.config/xmodmap/xmodmap.config && echo "SUCCEEDED" > ~/xmodmap_status || echo "FAILED" > ~/xmodmap_status
 fi
 
 mopidy &

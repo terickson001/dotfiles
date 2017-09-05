@@ -1,6 +1,5 @@
 i3-gaps-git
-tabbed
-rxvt-unicode
+rxvt-unicode-pixbuf
 gnu-free-fonts
 terminess-powerline-font-git
 antigen-git
@@ -14,6 +13,5 @@ ibus
 ibus-mozc
 polybar
 feh
-gvim
 firefox
 siji-git

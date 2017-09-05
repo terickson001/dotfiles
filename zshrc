@@ -51,9 +51,10 @@ alias "edit"=$EDITOR
 alias ":e"="edit"
 alias ":qa"="pkill -9 urxvtc"
 alias "yi"="yi --frontend vty --keymap vim"
+alias "ls"="ls --color=always -F"
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin"
-# export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
-export wallpaper="$HOME/dotfiles/wallpapers/analog_chicken.jpg"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin:$HOME/opt/ARMCompiler6.8/bin"
+export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
+export LC_COLLATE="C"
 
 antigen apply

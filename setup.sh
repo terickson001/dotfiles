@@ -27,16 +27,4 @@ for file in $files; do
 done
 
 
-wallpaper_dir=$HOME/.wallpapers
-
-echo "Downloading wallpapers..."
-while read -r line
-do
-    [[ $line = "" ]] && continue
-    name=$(sed "s/^[^\[]*\[\(.*\)\].*/\1/" <<< $line)
-    src=$(sed "s/^[^\[]*\[.*\]\s*//" <<< $line)
-    extension=$(awk -F. '{print $NF}' <<< $line)
-    [[ -f $wallpaper_dir/$name.$extension ]] && continue
-    echo "    $name"
-    wget -nd -O "$wallpaper_dir/$name.$extension" -A jpg,jpeg,png,bmp $src > $wallpaper_dir/download_errors.txt 2>&1
-done < "$wallpaper_dir/SOURCES"
+wallpaper --update
