@@ -2,6 +2,7 @@
 
 wallpaper_dir=$HOME/.wallpapers
 
+LOAD=false
 SAVE=false
 INTERACTIVE=false
 LIST_WALLS=false
@@ -11,8 +12,6 @@ current=$(cat $wallpaper_dir/.current)
 if [[ $current =~ , ]]; then
     current=$(sed ":loop; s/^\s*,/_,/g; s/,\s*,/,_,/g; s/,\s*$/,_/g; s/,\s*::/,_::/g; t loop" <<< $current)
 fi
-
-echo "Starting Interactive Mode..."
 
 function list {
     ls -1 $wallpaper_dir/ | egrep -v "SOURCES|download_errors|\.current" | perl -lne "print \$1 if /([a-zA-Z0-9_-]*)\.[a-z]*$/" | egrep "$PATTERN"
@@ -32,6 +31,31 @@ function set_wall {
     echo "$1" > "$wallpaper_dir/.current"
 }
 
+function set_display {
+    monitors=($(multihead_getMonitorOrder))
+    if [[ $1 -le ${#monitors[@]} ]]; then
+        OLDIFS=$IFS
+        if [[ $current =~ , ]]; then
+            IFS=","; read -ra tmp <<< $current
+            tmp[$1-1]=$2
+            current=$(echo "${tmp[*]}")
+            IFS=$OLDIFS
+        else
+            bg="$(perl -lne "print \$1 if /.*::(.*)/" <<< $current)"
+            declare -a tmp
+            for ((i=0; i<${#monitors[@]}; ++i)); do
+                if [[ $[$i+1] -eq $1 ]]; then
+                    tmp[$i]=$2
+                else
+                    tmp[$i]="_"
+                fi
+            done
+            IFS=","; current=$(echo "${tmp[*]}"); IFS=$OLDIFS
+        fi
+        set_wall $current
+    fi
+}
+
 function save {
     local_var wallpaper=$1
 }
@@ -45,54 +69,43 @@ function interactive {
         clear
         echo "Choose one of the following wallpapers: "
         echo -e "$(sed "$[$choice+1] s/^.*$/[37;7m&[m/" <<< $options)"
-        echo -e "\nControls:\n  ENTER: Apply wallpaper to all displays\n  [1-N]: Apply wallpaper to specific display\n  ESC: Exit"
+        echo -e "\nControls:\n  ENTER: Apply wallpaper to all displays\n  [1-N]: Apply wallpaper to specific display\n  [F1-N]: Apply a solid background to specific display\n  ESC | q: Exit"
+        echo -e "\e[$[$choice+1];f"
         while read -rsn1 ui; do
             case "$ui" in
                 $'\x1b')    # Handle ESC sequence.
                     # Flush read. We account for sequences for Fx keys as
                     # well. 6 should suffice far more then enough.
                     read -rsn1 -t 0.01 tmp
-                    if [[ "$tmp" == "[" ]]; then
-                        read -rsn1 -t 0.01 tmp
-                        case "$tmp" in
-                            "A") [ $choice -gt 0 ] && choice=$[$choice-1];;
-                            "B") [ $[$choice+1] -lt $(list | wc -l) ] && choice=$[$choice+1];;
-                        esac
-                    elif [[ "$tmp" == "" ]]; then
-                        break 2;
-                    fi
+                    case "$tmp" in
+                        "[")
+                            read -rsn1 -t 0.01 tmp
+                            case "$tmp" in
+                                "A") [ $choice -gt 0 ] && choice=$[$choice-1];;                    # Arrow Key (UP)
+                                "B") [ $[$choice+1] -lt $(list | wc -l) ] && choice=$[$choice+1];; # Arrow Key (DOWN)
+                                1|2)                                                               # Function Keys (F1-F9)
+                                    read -rsn1 -t 0.01 tmp
+                                    if [[ "$tmp" -eq "0" ]]; then
+                                        tmp=10
+                                    elif [[ "$tmp" -gt "6" ]]; then
+                                        tmp=$[$tmp-1]
+                                    fi
+                                    set_display $tmp "_"
+                                    ;;
+                            esac
+                            ;;
+                        "") echo -e "\e[$[$(list | wc -l)+7];f"; break 2;;  # ESC Key
+                    esac
                     # Flush "stdin" with 0.01  sec timeout.
                     read -rsn5 -t 0.01
                     break
                     ;;
-                    # Other one byte (char) cases. Here only quit.
                 [1-9])
-                    monitors=($(multihead_getMonitorOrder))
-                    if [[ $ui -le ${#monitors[@]} ]]; then
-                        OLDIFS=$IFS
-                        if [[ $current =~ , ]]; then
-                            IFS=","; read -ra tmp <<< $current
-                            tmp[$ui-1]=$(list | awk "NR==$choice+1")
-                            current=$(echo "${tmp[*]}")
-                            IFS=$OLDIFS
-                        else
-                            bg="$(perl -lne "print \$1 if /.*::(.*)/" <<< $current)"
-                            declare -a tmp
-                            for ((i=0; i<${#monitors[@]}; ++i)); do
-                                if [[ $[$i+1] -eq $ui ]]; then
-                                    tmp[$i]=$(list | awk "NR==$choice+1")
-                                else
-                                    tmp[$i]="_"
-                                fi
-                            done
-                            IFS=","; current=$(echo "${tmp[*]}"); IFS=$OLDIFS
-                        fi
-                        set_wall $current
-                    fi
+                    set_display $ui $(list | awk "NR==$choice+1") # Set display at <index> to <wall>
                     break
                     ;;
                 '') current=$(list | awk "NR==$choice+1"); set_wall $current; break;;
-                *)  echo "$ui"; break;;
+                "q") echo -e "\e[$[$(list | wc -l)+7];f"; break 2;;
             esac
         done      
     done
@@ -142,7 +155,7 @@ function compile {
         monitor_dims=$(xrandr -q | perl -lne "print \$1 if /${monitors[i]}.*\s([0-9]+x[0-9]+)/")
         monitor_offset=$(xrandr -q | perl -lne "print \$1 if /${monitors[i]}.*\s[0-9]+x[0-9]+(\+[0-9]+\+[0-9]+)\s/")
 
-        magick_command+=" ( $wall_file -geometry $monitor_dims^$monitor_offset -gravity center -crop $monitor_dims+0+0 -gravity none ) -composite"
+        magick_command+=" ( $wall_file -resize $monitor_dims^ -geometry $monitor_offset -gravity center -crop $monitor_dims+0+0 -gravity none ) -composite"
     done
 
     magick_command+=" jpeg:-"
@@ -201,7 +214,8 @@ eval set -- "$TEMP"
 
 while true; do
     case "$1" in
-        -l|--list) LIST_WALLS=true; shift;;
+        -l|--load) LOAD=true; shift;;
+        --list) LIST_WALLS=true; shift;;
         -s|--save) SAVE=true; shift;;
         -i|--interactive) INTERACTIVE=true; shift;;
         -p|--pattern) PATTERN=$2; shift 2;;
@@ -214,9 +228,13 @@ done
 if $LIST_WALLS; then
     list
     exit
-elif $INTERACTIVE; then
+fi
+if $LOAD; then
+    set_wall $(local_var wallpaper)
+fi
+if $INTERACTIVE; then
     interactive
-else
+elif [[ "$1" != "" ]]; then
     set_wall $1
     if $SAVE; then
         save $1
