@@ -123,3 +123,4 @@ xinput set-prop 12 "Synaptics Noise Cancellation" 20 20
 export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin:$HOME/.bin
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export LC_ALL=en_US.UTF-8

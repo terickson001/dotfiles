@@ -220,7 +220,7 @@ while true; do
         -i|--interactive) INTERACTIVE=true; shift;;
         -p|--pattern) PATTERN=$2; shift 2;;
         -u|--updated) update; shift;;
-        -h|--help) usage; shift;;
+        -h|--help) usage; exit; shift;;
         --) shift; break;;
     esac
 done

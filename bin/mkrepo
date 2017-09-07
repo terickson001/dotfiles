@@ -1,0 +1,79 @@
+#! /usr/bin/env bash
+
+git_user=$(local_var git_user)
+git_secret=$(local_var git_secret)
+
+PRIVATE=false
+
+if [[ "$git_user" = "" ]]; then
+    echo -n "Github username: "
+    read git_user
+    local_var "git_user=$git_user"
+fi
+if [[ "$git_secret" = "" ]]; then
+    echo -n "Github password: "
+    read -s git_secret
+    echo ""
+    local_var "git_secret=$git_secret"
+fi
+
+function usage {
+cat << EOF
+mkrepo: mkrepo [-n name] [-d description] [-h homepage] [-p] name
+    Simple script to create a remote github repo.
+    Options:
+        -n, --name:     Explicitly pass the name for the repo
+        -d, --desc:     The description for the repo
+        -h, --home:     The homepage for the repo
+        -p, --private:  Set the repo to private
+EOF
+}
+
+TEMP=$(getopt -o "n:d:h:p" --long "name:,desc:,homepage:,private,help" -n "mkrepo" -- "$@")
+eval set -- "$TEMP"
+
+while true; do
+    case "$1" in
+        -n|--name) NAME=$2; shift 2;;
+        -d|--desc) DESC=$2; shift 2;;
+        -h|--homepage) HOMEPAGE=$2; shift 2;;
+        -p|--private) PRIVATE=true; shift;;
+        --help) usage; exit; shift;;
+        --) shift; break;;
+    esac
+done
+
+if [[ "$NAME" = "" ]]; then
+    if [[ "$1" != "" ]]; then
+        NAME=$1
+    else
+        >&2 echo "ERROR: No repository name provided"
+        exit 1
+    fi
+fi
+
+function data_string {
+cat << EOF
+    {
+        "name": "$NAME",
+        "description": "$DESC",
+        "homepage": "$HOMEPAGE",
+        "private": $($PRIVATE && echo "true" || echo "false")
+    }
+EOF
+}
+
+function create {
+    curl -s -u "$git_user:$git_secret" https://api.github.com/user/repos -d "$(data_string)"
+}
+
+response=$(create)
+
+if [[ "$(awk "NR==3" <<< $response)" =~ ^\s*"name":\ "$NAME", ]]; then
+    echo "Repo '$NAME' created succesfully"
+else
+    echo "Repo '$NAME' could not be created:"
+    echo
+    echo "$response" | sed "s/^/    /g"
+    echo
+fi

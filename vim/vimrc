@@ -10,6 +10,7 @@ Plugin 'L9'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " General Plugins
+Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -32,7 +33,7 @@ Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'rargo/vim-tab'
 Plugin 'chiedo/vim-case-convert'
-Plugin 'sirver/ultisnips'
+" Plugin 'sirver/ultisnips'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -189,9 +190,9 @@ au BufNewFile,BufRead *frag set filetype=glsl
 au BufNewFile,BufRead *.ts set filetype=typescript
 
 " Haskell Settings
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-let g:necoghc_enable_detailed_browse = 1
-let g:ycm_filetype_blacklist = { 'haskell' : 1 }
+" let g:ycm_semantic_triggers = { 'haskell': ['.'] }
+" let g:necoghc_enable_detailed_browse = 1
+" let g:ycm_filetype_blacklist = { 'haskell' : 1 }
 let $PATH = $PATH . ':' . expand('~/.cabal/bin')
 au Filetype haskell set ts=8 et sts=4 sw=4 sr
 
@@ -257,19 +258,30 @@ autocmd BufEnter *.cpp call TabReloadCGtag()
 autocmd BufEnter *.java call TabReloadCGtag()
 
 " Javacomplete settings
-autocmd BufNewFile,BufRead *.java setlocal omnifunc=javacomplete#Complete
+" autocmd BufNewFile,BufRead *.java setlocal omnifunc=javacomplete#Complete
 
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+" nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+" imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
+" nmap <F5> <Plug>(JavaComplete-Imports-Add)
+" imap <F5> <Plug>(JavaComplete-Imports-Add)
 
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+" nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+" imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+" nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+" imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 
 let g:syntastic_java_checkers=['javac']
 let g:syntastic_java_javac_config_file_enabled = 1
+
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextOmniPrecedence = ["&omnifunc", "&completefunc"]
+autocmd FileType php,java,ruby let g:EclimCompletionMethod = 'omnifunc'
+autocmd FileType php,java,ruby let g:ycm_cache_omnifunc = 0
+
+" For your list of filetypes where you want Eclim semantic completion 
+" as the default YCM completion mode:
+
+autocmd FileType php,java,ruby,c,cpp,perl,python  
+    \if &completefunc != '' | let &omnifunc=&completefunc | endif
