@@ -54,7 +54,7 @@ Plugin 'sophacles/vim-processing'
 Plugin 'brainfuck-syntax'
 Plugin 'terickson001/vim-odin'
 Plugin 'alisdair/vim-armasm'
-Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'artur-shaik/vim-javacomplete2'
 
 " Color Schemes
 Plugin 'chriskempson/base16-vim'
@@ -127,7 +127,7 @@ nnoremap <silent> <special> <F8> :if &filetype ==# 'tagbar' <Bar> :exe "TagbarCl
 let g:tagbar_width=30
 
 " Remove trailing whitespace
-nnoremap <Leader>tr :%s/\s*$//g<CR>:let @/=""<CR>
+nnoremap <silent> <Leader>tr :%s/\s\+$//g<CR>:let @/=""<CR>
 
 " .h <-> .c
 nnoremap <F4> :A<CR>
@@ -163,6 +163,7 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDDefaultNesting = 0
 
 imap <C-;> <Plug>NERDCommenterInsert
+imap <C-Space> <C-X><C-O><C-P>
 
 "iunmap <Leader> (Causes Delay when typing '\' in insert mode)
 au VimEnter *
@@ -278,10 +279,13 @@ let g:syntastic_java_javac_config_file_enabled = 1
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextOmniPrecedence = ["&omnifunc", "&completefunc"]
 autocmd FileType php,java,ruby let g:EclimCompletionMethod = 'omnifunc'
+autocmd FileType php,java,ruby set omnifunc=eclim#java#complete#CodeComplete
 autocmd FileType php,java,ruby let g:ycm_cache_omnifunc = 0
 
-" For your list of filetypes where you want Eclim semantic completion 
+" For your list of filetypes where you want Eclim semantic completion
 " as the default YCM completion mode:
 
-autocmd FileType php,java,ruby,c,cpp,perl,python  
-    \if &completefunc != '' | let &omnifunc=&completefunc | endif
+" autocmd FileType php,java,ruby,c,cpp,perl,python
+    " \if &completefunc != '' | let &omnifunc=&completefunc | endif
+
+set completeopt=menuone
