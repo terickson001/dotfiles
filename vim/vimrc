@@ -161,6 +161,7 @@ let g:NERDAltDelims_haskell = 1
 let g:NERDSpaceDelims = 1
 let g:NERDRemoveExtraSpaces = 1
 let g:NERDDefaultNesting = 0
+let g:NERDCustomDelimiters = { 'armasm': { 'left': '@'} }
 
 imap <C-;> <Plug>NERDCommenterInsert
 imap <C-Space> <C-X><C-O><C-P>
