@@ -33,7 +33,9 @@ Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'rargo/vim-tab'
 Plugin 'chiedo/vim-case-convert'
-" Plugin 'sirver/ultisnips'
+Plugin 'sirver/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'h2cppx'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -187,6 +189,10 @@ set secure
 " GLSL File Detection
 au BufNewFile,BufRead *vert set filetype=glsl
 au BufNewFile,BufRead *frag set filetype=glsl
+
+" h2cpp Settings
+nmap <F3> :H2cppxAuto<CR>
+let g:h2cppx_python_path = '/usr/bin/python2'
 
 " TypeScript File Detection
 au BufNewFile,BufRead *.ts set filetype=typescript

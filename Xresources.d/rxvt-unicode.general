@@ -12,10 +12,20 @@ urxvt*.foreground: #BFBEC3
 urxvt*.background: rgba:1200/1800/2000/e600
 urxvt*depth: 32
 !urxvt*tintColor: #12171F
+
 urxvt.keysym.C-semicolon: \033[;
+
+urxvt.keysym.C-KP_Subtract: resize-font:smaller
+urxvt.keysym.C-KP_Add:      resize-font:bigger
 
 urxvt.inputMethod: ibus
 urxvt.preeditType: OverTheSpot
+
+urxvt.perl-lib: /usr/lib/urxvt/perl/
+urxvt.perl-ext-common: default,resize-font
+
+urxvt.iso14755: False
+urxvt.iso14755_52: False
 
 !urxvt*.transparent: true
 !urxvt*.shading: 150
