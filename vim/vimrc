@@ -35,7 +35,7 @@ Plugin 'rargo/vim-tab'
 Plugin 'chiedo/vim-case-convert'
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'h2cppx'
+Plugin 'xuqix/h2cppx'
 
 " Integration
 Plugin 'eagletmt/ghcmod-vim'
@@ -56,7 +56,6 @@ Plugin 'sophacles/vim-processing'
 Plugin 'brainfuck-syntax'
 Plugin 'terickson001/vim-odin'
 Plugin 'alisdair/vim-armasm'
-" Plugin 'artur-shaik/vim-javacomplete2'
 
 " Color Schemes
 Plugin 'chriskempson/base16-vim'
@@ -296,3 +295,13 @@ autocmd FileType php,java,ruby let g:ycm_cache_omnifunc = 0
     " \if &completefunc != '' | let &omnifunc=&completefunc | endif
 
 set completeopt=menuone
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"

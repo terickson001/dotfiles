@@ -39,6 +39,8 @@
 !bin/**
 !wallpapers/
 !wallpapers/SOURCES
+!utils/
+!utils/SOURCES
 
 ## .xmonad includes ##
 !xmonad
