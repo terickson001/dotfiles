@@ -34,7 +34,6 @@ function set_wall {
 
 function set_display {
     monitors=($(multihead_getMonitorOrder))
-    echo "setting display $1 to $2"
     if [[ $1 -le ${#monitors[@]} ]]; then
         OLDIFS=$IFS
         if [[ $current =~ , ]]; then
@@ -54,7 +53,6 @@ function set_display {
             done
             IFS=","; current=$(echo "${tmp[*]}"); IFS=$OLDIFS
         fi
-        echo "calling set_wall"
         set_wall $current
     fi
 }
