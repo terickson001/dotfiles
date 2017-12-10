@@ -1,3 +1,5 @@
+urxvt.termName: rxvt-256color
+
 urxvt*scrollBar: false
 urxvt*cursorBlink: 1
 urxvt*font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13

@@ -22,8 +22,6 @@ numlockx on
 
 [[ -x $HOME/bin/setup_display ]] && $HOME/bin/setup_display
 
-ntpd -qg > ~/ntpd_out
-
 if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
     sleep 1 && xmodmap $HOME/.config/xmodmap/xmodmap.config && echo "SUCCEEDED" > ~/xmodmap_status || echo "FAILED" > ~/xmodmap_status
 fi
