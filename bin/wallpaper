@@ -6,6 +6,7 @@ LOAD=false
 SAVE=false
 INTERACTIVE=false
 LIST_WALLS=false
+RAW=false
 PATTERN="*"
 
 current=$(cat $wallpaper_dir/.current)
@@ -19,7 +20,7 @@ function list {
 
 function set_wall {
     if [[ $1 =~ , ]]; then
-        compile $1 | feh --no-xinerama --bg-fill -
+        compile $1 | tee >(feh --no-xinerama --bg-fill -) > "$wallpaper_dir/.cached"
     elif [[ $1 =~ ^:: ]]; then
         screen_dims=$(xrandr -q | perl -lne "print \"\$1x\$2\" if /Screen.*current\s*([0-9]*)\s*x\s*([0-9]*)/")
         bg_color=$(perl -lne "print \$1 if /.*::(.*)/" <<< $1)
@@ -33,6 +34,7 @@ function set_wall {
 
 function set_display {
     monitors=($(multihead_getMonitorOrder))
+    echo "setting display $1 to $2"
     if [[ $1 -le ${#monitors[@]} ]]; then
         OLDIFS=$IFS
         if [[ $current =~ , ]]; then
@@ -52,6 +54,7 @@ function set_display {
             done
             IFS=","; current=$(echo "${tmp[*]}"); IFS=$OLDIFS
         fi
+        echo "calling set_wall"
         set_wall $current
     fi
 }
@@ -178,11 +181,13 @@ wallpaper: wallpaper [-ilsu] [--pattern <pattern>] [wallpaper_setting]
         -u, --update            Update the wallpapers in ~/.wallpapers using
                                 the SOURCES file.
 
+        -r, --get-raw           Returns the wallpaper image through stdout
+
         -p, --pattern <pattern> Filter the output of --list and the choices
                                 in --interactive mode using the regex <pattern>
 
     Wallpaper Setting:
-        <wallpaper>[,...][::<bg_color]
+        <wallpaper>[,<wallpaper>,..][::<bg_color]
             <wallpaper>:        The name of the wallpaper in ~/.wallpapers,
                                 without a file extension
 
@@ -198,18 +203,17 @@ wallpaper: wallpaper [-ilsu] [--pattern <pattern>] [wallpaper_setting]
         just the <bg_color>
             e.g: ,wall2,::#12171f
 
-        If you just want to set a solid wallpaper for one monitor you
-        can simply use:
+        If you just want to set a solid wallpaper you can simply use:
             ::<bg_color>
     
     NOTE: This currently utilizes some local scripts, namely:
-            multihead_getMonitorOrder
-            local_var
+            multihead_getMonitorOrder (Ordering of monitors from left to right)
+            local_var                 (Saving and loading current wallpaper settings)
 
 EOF
 }
 
-TEMP=$(getopt -o "lsip:uh" --long "list,save,interactive,pattern:,update,help" -n "wallpaper" -- "$@")
+TEMP=$(getopt -o "lsip:uhr" --long "list,save,interactive,pattern:,update,help,get-raw" -n "wallpaper" -- "$@")
 eval set -- "$TEMP"
 
 while true; do
@@ -219,7 +223,8 @@ while true; do
         -s|--save) SAVE=true; shift;;
         -i|--interactive) INTERACTIVE=true; shift;;
         -p|--pattern) PATTERN=$2; shift 2;;
-        -u|--updated) update; shift;;
+        -r|--get-raw) RAW=true; shift;;
+        -u|--update) update; shift;;
         -h|--help) usage; exit; shift;;
         --) shift; break;;
     esac
@@ -229,11 +234,17 @@ if $LIST_WALLS; then
     list
     exit
 fi
+if $INTERACTIVE && $RAW; then
+    echo "--interactive and --get-raw can not be run at the same time"
+    exit
+fi
 if $LOAD; then
     set_wall $(local_var wallpaper)
 fi
 if $INTERACTIVE; then
     interactive
+elif $RAW; then
+    compile $current
 elif [[ "$1" != "" ]]; then
     set_wall $1
     if $SAVE; then
