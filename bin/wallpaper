@@ -25,7 +25,7 @@ function set_wall {
         screen_dims=$(xrandr -q | perl -lne "print \"\$1x\$2\" if /Screen.*current\s*([0-9]*)\s*x\s*([0-9]*)/")
         bg_color=$(perl -lne "print \$1 if /.*::(.*)/" <<< $1)
         bg_color=${bg_color:-"#12171f"}
-        convert -size $screen_dims canvas:$bg_color jpeg:- | feh --bg-fill --no-xinerama -
+        convert -colorspace sRGB -size $screen_dims canvas:$bg_color jpeg:- | feh --bg-fill --no-xinerama -
     else
         feh --no-xinerama --bg-fill $wallpaper_dir/$1.* 2>/dev/null 
     fi
@@ -111,7 +111,7 @@ function interactive {
         done      
     done
     if $SAVE; then
-        save $(list | awk "NR==$choice+1")
+        save $current
     fi
 }
 
@@ -147,7 +147,7 @@ function compile {
         exit
     fi
 
-    magick_command="convert -size $screen_dims canvas:$bg_color"
+    magick_command="convert -colorspace sRGB -size $screen_dims canvas:$bg_color"
     for ((i=0; i<${#monitors[@]}; ++i)); do
         if [[ ${walls[i]} = "_" ]]; then
             continue;
