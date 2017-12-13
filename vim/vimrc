@@ -35,28 +35,18 @@ Plugin 'rargo/vim-tab'
 Plugin 'chiedo/vim-case-convert'
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'xuqix/h2cppx'
+Plugin 'terickson001/h2cppx'
 
 " Integration
-Plugin 'eagletmt/ghcmod-vim'
 Plugin 'tikhomirov/vim-glsl'
-Plugin 'kh3phr3n/python-syntax'
-" Plugin 'tmhedberg/SimpylFold'
 Plugin 'justinmk/vim-syntax-extra'
 Plugin 'a.vim'
 Plugin 'othree/html5.vim'
 Plugin 'alvan/vim-closetag'
-Plugin 'tpope/vim-haml'
-Plugin 'leafgarland/typescript-vim'
 Plugin 'raichoo/haskell-vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'pbrisbin/vim-syntax-shakespeare'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'sophacles/vim-processing'
 Plugin 'brainfuck-syntax'
 Plugin 'terickson001/vim-odin'
 Plugin 'alisdair/vim-armasm'
-Plugin 'leafo/moonscript-vim'
 
 " Color Schemes
 Plugin 'chriskempson/base16-vim'
@@ -155,7 +145,7 @@ let g:NERDAltDelims_haskell = 1
 let g:NERDSpaceDelims = 1
 let g:NERDRemoveExtraSpaces = 1
 let g:NERDDefaultNesting = 0
-let g:NERDCustomDelimiters = { 'armasm': { 'left': '@'} }
+let g:NERDCustomDelimiters = { 'armasm': { 'left': '@'}, 'odin': { 'left': '//', 'leftALT': '/*', 'rightALT': '*/'} }
 
 imap <C-;> <Plug>NERDCommenterInsert
 imap <C-Space> <C-X><C-O><C-P>
