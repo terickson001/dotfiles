@@ -10,6 +10,8 @@ bindkey -e
 
 function prompt_git_info() {
     local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    local remote_ahead=$(git status -uno 2>/dev/null | grep -q "Your branch is behind"; echo  $?)
+    local local_ahead=$(git status -uno 2>/dev/null | grep -q "Your branch is ahead"; echo $?)
     local color=white
     if [[ -z $branch ]]; then
         return
@@ -19,7 +21,13 @@ function prompt_git_info() {
         local color=yellow
     fi
     # echo "|[git:$branch]"
-    echo "%{$fg_bold[blue]%}|%{$fg[red]%}[git:%{$fg_bold[$color]%}$branch%{$fg[red]%}]%{$reset_color%}"
+    local ahead_marker=""
+    if [ "$remote_ahead" -eq "0" ]; then
+        local ahead_marker="^"
+    elif [ "$local_ahead" -eq "0" ]; then
+        local ahead_marker="*"
+    fi
+    echo "%{$fg_bold[blue]%}|%{$fg[red]%}[git:%{$fg_bold[$color]%}$branch%{$fg[magenta]%}$ahead_marker%{$fg[red]%}]%{$reset_color%}"
 }
 
 function prompt_color() {
@@ -33,10 +41,10 @@ function prompt_color() {
     echo $color
 }
 
-setopt PROMPT_SUBST 
+setopt PROMPT_SUBST
 
-# PROMPT='>' 
-PROMPT='%{$fg_bold[$(prompt_color)]%}>%{$reset_color%} ' 
+# PROMPT='>'
+PROMPT='%{$fg_bold[$(prompt_color)]%}>%{$reset_color%} '
 RPROMPT='%~$(prompt_git_info)'
 
 
