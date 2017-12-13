@@ -86,6 +86,8 @@
 !config/xmodmap/
 !config/xmodmap/**
 
+!config/compton.conf
+
 ## .vim includes ##
 !vim
 !vim/after/

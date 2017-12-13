@@ -16,7 +16,7 @@ set $mod Mod4
 # font pango:monospace 8
 
 exec_always --no-startup-id wallpaper $(local_var wallpaper)
-exec_always --no-startup-id compton --backend glx --vsync opengl-swc --no-fading-openclose &
+exec_always --no-startup-id compton &
 exec_always --no-startup-id polylaunch
 exec multihead_initWorkspaces
 # exec --no-startup-id xsetroot -solid "#2f343f"
