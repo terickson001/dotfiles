@@ -9,11 +9,7 @@ URxvt.scrollWithBuffer: true
 URxvt.scrollTtyKeypress: true
 URxvt.secondaryScroll: false
 
-URxvt.foreground: #BFBEC3
-!URxvt.background: #12171F
-!URxvt.background: rgba:1200/1800/2000/e600
 URxvt.depth: 32
-!URxvt.tintColor: #12171F
 
 urxvt.keysym.C-semicolon: \033[;
 
