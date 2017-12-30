@@ -11,44 +11,28 @@
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# font pango:monospace 8
-
 exec_always --no-startup-id wallpaper $(local_var wallpaper)
 exec_always --no-startup-id compton &
 exec_always --no-startup-id polylaunch
+# exec_always --no-startup-id urxvtd -q -o -f &
 exec multihead_initWorkspaces
-# exec --no-startup-id xsetroot -solid "#2f343f"
 
 new_window pixel 0
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec firefox
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
 bindsym $mod+p exec rofi -show run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
@@ -193,6 +177,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+bindsym $mod+q exec lock.sh -l dimblur
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 # bar {
@@ -221,8 +207,8 @@ client.focused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
 client.unfocused #3A3C4A #3A3C4A #3A3C4A #3A3C4A #3A3C4A
 
 # Gaps
-gaps outer 10
-gaps inner 5
+gaps outer 15
+gaps inner 15
 
 # Multi-Media Keys
 bindsym XF86AudioPlay exec playerctl play-pause

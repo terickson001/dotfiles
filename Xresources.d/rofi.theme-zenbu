@@ -1,0 +1,22 @@
+! ROFI COLORS
+rofi.bg:                #12171f
+rofi.bg-active:         #12171f
+rofi.bg-urgent:         #12171f
+rofi.bgalt:             #12171f
+rofi.bc:                #bfbec3
+rofi.bw:                0
+rofi.fg:                #bfbec3
+rofi.fg-active:         #bfbec3
+rofi.hlbg:              #12171f
+rofi.hlbg-active:       #12171f
+rofi.hlbg-urgent:       #12171f
+rofi.hlfg:              #ffffff
+rofi.hlfg-active:       #ffffff
+rofi.hlfg-urgent:       #ffffff
+rofi.hide-scrollbar:    true
+rofi.lines:             2
+rofi.separator-style:   none
+rofi.fullscreen:        false
+rofi.padding:           30
+!rofi.font:              Dina 8
+!rofi.width:             378

@@ -15,7 +15,7 @@ export QT_IM_MODULE=ibus
 ibus-daemon -rdx
 
 xrdb ~/.Xresources
-urxvtd -q -o -f
+# urxvtd -q -o -f
 xset s off
 xset -dpms
 numlockx on

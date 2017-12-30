@@ -1,19 +1,19 @@
-urxvt.termName: rxvt-256color
+URxvt.termName: rxvt-256color
 
-urxvt*scrollBar: false
-urxvt*cursorBlink: 1
-urxvt*font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13
+URxvt.scrollBar: false
+URxvt.cursorBlink: 1
+URxvt.font: -gohu-gohufont-medium-r-normal-*-14-100-100-100-c-80-iso10646-*
+!URxvt.font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollTtyKeypress: true
+URxvt.secondaryScroll: false
 
-urxvt*scrollTtyOutput: false
-urxvt*scrollWithBuffer: true
-urxvt*scrollTtyKeypress: true
-urxvt*secondaryScroll: false
-
-urxvt*.foreground: #BFBEC3
-!urxvt*.background: #12171F
-urxvt*.background: rgba:1200/1800/2000/e600
-urxvt*depth: 32
-!urxvt*tintColor: #12171F
+URxvt.foreground: #BFBEC3
+!URxvt.background: #12171F
+!URxvt.background: rgba:1200/1800/2000/e600
+URxvt.depth: 32
+!URxvt.tintColor: #12171F
 
 urxvt.keysym.C-semicolon: \033[;
 
@@ -24,11 +24,11 @@ urxvt.inputMethod: ibus
 urxvt.preeditType: OverTheSpot
 
 urxvt.perl-lib: /usr/lib/urxvt/perl/
-urxvt.perl-ext-common: default,resize-font
+urxvt.perl-ext-common: default,resize-font,clipboard,config-reload
 
 urxvt.iso14755: False
 urxvt.iso14755_52: False
 
-!urxvt*.transparent: true
-!urxvt*.shading: 150
-!urxvt*.fading: 20
+!URxvt.transparent: true
+!URxvt.shading: 150
+!URxvt.fading: 20

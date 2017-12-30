@@ -4,7 +4,7 @@
 source /usr/share/zsh/share/antigen.zsh
 source $HOME/.antigen/custom/colors
 
-source $HOME/.colors/base16-muted2.sh
+# source $HOME/.colors/nord.sh
 
 bindkey -e
 
@@ -63,8 +63,10 @@ alias "yi"="yi --frontend vty --keymap vim"
 alias "ls"="ls --color=always -F"
 alias "svim"="ssh-agent -- vim -c '!ssh-add'"
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin:$HOME/opt/ARMCompiler6.8/bin"
-export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
+export GOROOT="$HOME/go"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin:$HOME/opt/ARMCompiler6.8/bin:$GOROOT/bin"
+# export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
 export LC_COLLATE="C"
 export LC_ALL=en_US.UTF-8
 export ECLIPSE_HOME="$HOME/.eclipse/org.eclipse.platform_4.7.0_155965261_linux_gtk_x86_64"

@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-killall -q polybar
+2>/dev/null 1>&2 killall -q polybar
 
 monitors=($(multihead_getPrimaryMonitorOrder))
 

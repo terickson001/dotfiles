@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+zenbu $1
+xrdb $HOME/.Xresources
+killall -SIGHUP urxvt
+2>/dev/null 1>&2 source ~/zshrc
+2>/dev/null 1>&2 polylaunch &
+wallpaper $(local_var wallpaper) &
