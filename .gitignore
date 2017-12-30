@@ -95,6 +95,9 @@
 !vim
 !vim/after/
 !vim/after/**
+!vim/colors/
+!vim/colors/**
 !vim/init.vim
 !vim/setup.sh
 !vim/vimrc
+
