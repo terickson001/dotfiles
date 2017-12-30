@@ -4,7 +4,7 @@
 source /usr/share/zsh/share/antigen.zsh
 source $HOME/.antigen/custom/colors
 
-# source $HOME/.colors/nord.sh
+emulate bash -c "source $HOME/.colors/base16-zenbu"
 
 bindkey -e
 
