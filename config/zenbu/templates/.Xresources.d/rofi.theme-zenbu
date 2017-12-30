@@ -1,0 +1,22 @@
+! ROFI COLORS
+rofi.bg:                {{ bgc }}
+rofi.bg-active:         {{ bgc }}
+rofi.bg-urgent:         {{ bgc }}
+rofi.bgalt:             {{ bgc }}
+rofi.bc:                {{ fgc }}
+rofi.bw:                0
+rofi.fg:                {{ fgc }}
+rofi.fg-active:         {{ fgc }}
+rofi.hlbg:              {{ bgc }}
+rofi.hlbg-active:       {{ bgc }}
+rofi.hlbg-urgent:       {{ bgc }}
+rofi.hlfg:              #ffffff
+rofi.hlfg-active:       #ffffff
+rofi.hlfg-urgent:       #ffffff
+rofi.hide-scrollbar:    true
+rofi.lines:             2
+rofi.separator-style:   none
+rofi.fullscreen:        false
+rofi.padding:           30
+!rofi.font:              Dina 8
+!rofi.width:             378

@@ -88,6 +88,9 @@
 
 !config/compton.conf
 
+!config/zenbu/
+!config/zenbu/**
+
 ## .vim includes ##
 !vim
 !vim/after/
