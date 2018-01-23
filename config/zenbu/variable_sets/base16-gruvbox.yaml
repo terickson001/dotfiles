@@ -1,0 +1,54 @@
+colors:
+  background:         "#1d2021"
+  foreground:         "#d5c4a1"
+  cursor:             "#d5c4a1"
+  black:
+    normal:           "#1d2021"
+    bold:             "#665c54"
+  red:
+    normal:           "#fb4934"
+    bold:             "#fb4934"
+  green:
+    normal:           "#b8bb26"
+    bold:             "#b8bb26"
+  yellow:
+    normal:           "#fabd2f"
+    bold:             "#fabd2f"
+  blue:
+    normal:           "#83af98"
+    bold:             "#83af98"
+  magenta:
+    normal:           "#d3869b"
+    bold:             "#d3869b"
+  cyan:
+    normal:           "#8ec07c"
+    bold:             "#8ec07c"
+  white:
+    normal:           "#d5c4a1"
+    bold:             "#fbf1c7"
+
+termcolors:
+    color00: "{{ colors.black.normal }}"   # Base 00 - Black
+    color01: "{{ colors.red.normal }}"     # Base 08 - Red
+    color02: "{{ colors.green.normal }}"   # Base 0B - Green
+    color03: "{{ colors.yellow.normal }}"  # Base 0A - Yellow
+    color04: "{{ colors.blue.normal }}"    # Base 0D - Blue
+    color05: "{{ colors.magenta.normal }}" # Base 0E - Magenta
+    color06: "{{ colors.cyan.normal }}"    # Base 0C - Cyan
+    color07: "{{ colors.white.normal }}"   # Base 05 - White
+
+    color08: "{{ colors.black.bold }}"     # Base 03 - Bright Black
+    color09: "{{ colors.red.bold }}"       # Base 08 - Bright Red
+    color10: "{{ colors.green.bold }}"     # Base 0B - Bright Green
+    color11: "{{ colors.yellow.bold }}"    # Base 0A - Bright Yellow
+    color12: "{{ colors.blue.bold }}"      # Base 0D - Bright Blue
+    color13: "{{ colors.magenta.bold }}"   # Base 0E - Bright Magenta
+    color14: "{{ colors.cyan.bold }}"      # Base 0C - Bright Cyan
+    color15: "{{ colors.white.bold }}"     # Base 07 - Bright White
+
+    color16: "#fe8019"                   # Base 09
+    color17: "#d65d0e"                   # Base 0F
+    color18: "#3c3836"                   # Base 01
+    color19: "#504945"                   # Base 02
+    color20: "#bdae93"                   # Base 04
+    color21: "#ebdbb2"                   # Base 06

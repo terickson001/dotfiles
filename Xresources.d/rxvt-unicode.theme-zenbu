@@ -1,39 +1,39 @@
 !! Zenbu
 
 ! special
-*.borderColor:  #12171f
-*.background:   #12171f
-*.foreground:   #bfbec3
-*.cursorColor:  #bfbec3
+*.borderColor:  #1d2021
+*.background:   #1d2021
+*.foreground:   #d5c4a1
+*.cursorColor:  #d5c4a1
 
 ! Black
-*color0:       #12171f
-*color8:       #435573
+*color0:       #1d2021
+*color8:       #665c54
 
 ! Red
-*color1:       #bf616a
-*color9:       #bf616a
+*color1:       #fb4934
+*color9:       #fb4934
 
 ! Green
-*color2:       #a3be8c
-*color10:      #a3be8c
+*color2:       #b8bb26
+*color10:      #b8bb26
 
 ! Yellow
-*color3:       #ebcb8b
-*color11:      #ebcb8b
+*color3:       #fabd2f
+*color11:      #fabd2f
 
 ! Blue
-*color4:       #8fa1b3
-*color12:      #8fa1b3
+*color4:       #83af98
+*color12:      #83af98
 
 ! Magenta
-*color5:       #b48ead
-*color13:      #b48ead
+*color5:       #d3869b
+*color13:      #d3869b
 
 ! Cyan
-*color6:       #96b5b4
-*color14:      #96b5b4
+*color6:       #8ec07c
+*color14:      #8ec07c
 
 ! White
-*color7:       #bfbec3
-*color15:      #d4d3d9
+*color7:       #d5c4a1
+*color15:      #fbf1c7

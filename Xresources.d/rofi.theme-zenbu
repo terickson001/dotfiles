@@ -1,15 +1,15 @@
 ! ROFI COLORS
-rofi.bg:                #12171f
-rofi.bg-active:         #12171f
-rofi.bg-urgent:         #12171f
-rofi.bgalt:             #12171f
-rofi.bc:                #bfbec3
+rofi.bg:                #1d2021
+rofi.bg-active:         #1d2021
+rofi.bg-urgent:         #1d2021
+rofi.bgalt:             #1d2021
+rofi.bc:                #d5c4a1
 rofi.bw:                0
-rofi.fg:                #bfbec3
-rofi.fg-active:         #bfbec3
-rofi.hlbg:              #12171f
-rofi.hlbg-active:       #12171f
-rofi.hlbg-urgent:       #12171f
+rofi.fg:                #d5c4a1
+rofi.fg-active:         #d5c4a1
+rofi.hlbg:              #1d2021
+rofi.hlbg-active:       #1d2021
+rofi.hlbg-urgent:       #1d2021
 rofi.hlfg:              #ffffff
 rofi.hlfg-active:       #ffffff
 rofi.hlfg-urgent:       #ffffff
