@@ -227,10 +227,10 @@ case "$1" in
 		echo
 		echo "Applying dim and blur effect to resized image"
 		# dim
-		wallpaper --get-raw --dim > "$dim"
+		# wallpaper --get-raw --dim > "$dim"
 
 		# blur
-		wallpaper --get-raw --blur > "$blur"
+		# wallpaper --get-raw --blur > "$blur"
 
 		# dimblur
 		wallpaper --get-raw --blur --dim > "$dimblur"

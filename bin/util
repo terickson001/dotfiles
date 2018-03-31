@@ -28,10 +28,16 @@ update() {
     echo "Done."
 }
 
-getdict() {
+get_dict() {
     dest=${1:-dict}
     cp $HOME/.utils/english-words/words.txt $dest
 }
+
+get_gb() {
+    dest=${1:-gb}
+    cp -r $HOME/.utils/gb $dest
+}
+
 op=$1; shift
 
 $op ${args[@]}
