@@ -27,7 +27,7 @@ Plugin 'AutoTag'
 Plugin 'danro/rename.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'delimitMate.vim'
-Plugin 'valloric/YouCompleteMe'
+" Plugin 'valloric/YouCompleteMe'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
@@ -73,7 +73,7 @@ map! <Esc>[; <C-;>
 
 set timeout
 
-set cul ts=4 sw=4 sts=4 et hls dg
+set nocul ts=4 sw=4 sts=4 et hls dg
 
 set term=xterm-256color
 let g:base16colorspace="256"
