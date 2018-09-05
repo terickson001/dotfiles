@@ -9,6 +9,7 @@ LIST_WALLS=false
 RAW=false
 DIM=false
 BLUR=false
+QUEUE_UPDATE=false;
 PATTERN="*"
 default_bg_color=$(xrdb -q | sed -n "s/^.*background:\s*\(#[A-Fa-f0-9]\{1,6\}\).*/\1/p")
 
@@ -19,6 +20,15 @@ fi
 
 function list {
     ls -1 $wallpaper_dir/ | egrep -v "SOURCES|download_errors|\.current" | perl -lne "print \$1 if /([a-zA-Z0-9_-]*)\.[a-z]*$/" | egrep "$PATTERN"
+}
+
+function add {
+    name=$(sed "s/^[^\[]*\[\(.*\)\].*/\1/" <<< $1)
+    src=$(sed "s/^[^\[]*\[.*\]\s*//" <<< $1)
+
+    name=$(sed "s/^\(.*\)=.*$/\1/" <<< $1)
+    src=$(sed "s/^.*=\s*\(.*\)\s*$/\1/" <<< $1)
+    echo "["$name"] "$src >> $wallpaper_dir/SOURCES
 }
 
 function set_wall {
@@ -222,7 +232,7 @@ wallpaper: wallpaper [-ilsu] [--pattern <pattern>] [wallpaper_setting]
 EOF
 }
 
-TEMP=$(getopt -o "lsip:uhrbd" --long "list,save,interactive,pattern:,update,help,get-raw,blur,dim" -n "wallpaper" -- "$@")
+TEMP=$(getopt -o "lsip:uhrbda:" --long "add:,list,save,interactive,pattern:,update,help,get-raw,blur,dim" -n "wallpaper" -- "$@")
 eval set -- "$TEMP"
 
 while true; do
@@ -235,11 +245,16 @@ while true; do
         -d|--dim) DIM=true; shift;;
         -b|--blur) BLUR=true; shift;;
         -r|--get-raw) RAW=true; shift;;
-        -u|--update) update; shift;;
+        -u|--update) QUEUE_UPDATE=true; shift;;
+        -a|--add) add $2; shift 2;;
         -h|--help) usage; exit; shift;;
         --) shift; break;;
     esac
 done
+
+if $QUEUE_UPDATE; then
+    update
+fi
 
 if $LIST_WALLS; then
     list

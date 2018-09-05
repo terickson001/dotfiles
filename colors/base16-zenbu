@@ -2,7 +2,7 @@
 # Base16 Ocean - Shell color setup script
 # Chris Kempson (http://chriskempson.com)
 
-if [ "${TERM%%-*}" = 'linux' ]; then
+if [[ "${TERM%%-*}" = 'linux' || "${TERM%%-*}" = 'eterm' ]]; then
     # This script doesn't support linux console (use 'vconsole' template instead)
     return 2>/dev/null || exit 0
 fi

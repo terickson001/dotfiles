@@ -12,6 +12,9 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
+xset +fp /home/tyler/.fonts
+xset fp rehash
+
 ibus-daemon -rdx
 
 xrdb ~/.Xresources
@@ -27,8 +30,6 @@ if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
 fi
 
 mopidy &
-eclimd -b
-
 
 session=${1:-i3}
 

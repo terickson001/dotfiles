@@ -2,8 +2,9 @@ URxvt.termName: rxvt-256color
 
 URxvt.scrollBar: false
 URxvt.cursorBlink: 1
-URxvt.font: -gohu-gohufont-medium-r-normal-*-14-100-100-100-c-80-iso10646-*
-!URxvt.font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13
+! URxvt.font: -gohu-gohufont-medium-r-normal-*-14-100-100-100-c-80-iso10646-*
+! URxvt.font: xft:xos4\ Terminess\ Powerline:style=Regular:size=13
+URxvt.font: xft:Inconsolata:style=Regular:size=14
 URxvt.scrollTtyOutput: false
 URxvt.scrollWithBuffer: true
 URxvt.scrollTtyKeypress: true
