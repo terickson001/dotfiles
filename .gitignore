@@ -103,3 +103,9 @@ colors/*zenbu*
 !vim/setup.sh
 !vim/vimrc
 
+## Emacs includes ##
+!emacs
+!emacs.d/
+!emacs.d/manual/
+!emacs.d/manual/**
+    
