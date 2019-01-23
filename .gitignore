@@ -108,4 +108,6 @@ colors/*zenbu*
 !emacs.d/
 !emacs.d/manual/
 !emacs.d/manual/**
+!emacs.d/elpa/
+!emacs.d/elpa/**
     
