@@ -179,7 +179,7 @@
     (c-set-offset 'substatement-open 0) ))
 
 ;; odin-mode
-(load "~/.emacs.d/manual/odin-mode/odin-mode")
+(load "~/.emacs.d/manual/odin-mode")
 (defvar default-tab-width 4)
 ;; Mail
 
