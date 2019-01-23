@@ -15,10 +15,7 @@ export QT_IM_MODULE=ibus
 xset +fp /home/tyler/.fonts
 xset fp rehash
 
-ibus-daemon -rdx
-
 xrdb ~/.Xresources
-# urxvtd -q -o -f
 xset s off
 xset -dpms
 numlockx on

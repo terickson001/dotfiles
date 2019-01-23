@@ -18,5 +18,6 @@ rofi.lines:             2
 rofi.separator-style:   none
 rofi.fullscreen:        false
 rofi.padding:           30
+rofi.terminal:          alacritty
 !rofi.font:              Dina 8
 !rofi.width:             378

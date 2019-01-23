@@ -52,3 +52,20 @@ termcolors:
     color19: "#344259"                   # Base 02
     color20: "#b4b3b8"                   # Base 04
     color21: "#d9d8de"                   # Base 06
+
+base00: "{{ colors.black.normal }}"
+base01: "#19202b"
+base02: "#344259"
+base03: "{{ colors.black.bold }}"
+base04: "#b4b3b8"
+base05: "{{ colors.white.normal }}"
+base06: "#96b564"
+base07: "{{ colors.white.bold }}"
+base08: "{{ colors.red.normal }}"
+base09: "#d08770"
+base0A: "{{ colors.yellow.normal }}"
+base0B: "{{ colors.green.normal }}"
+base0C: "{{ colors.cyan.normal }}"
+base0D: "{{ colors.blue.normal }}"
+base0E: "{{ colors.magenta.normal }}"
+base0F: "#ab7967"

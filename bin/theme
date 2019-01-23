@@ -1,0 +1,80 @@
+#! /usr/bin/env bash
+
+LIST=false
+RELOAD=false
+SAVE=false
+INTERACTIVE=false
+
+TEMP=$(getopt -o "lsri" --long "list,save,reload,interactive" -n "themes" -- "$@")
+eval set -- "$TEMP"
+
+while true; do
+    case "$1" in
+        -l|--list)        LIST=true; shift;;
+        -s|--save)        SAVE=true; shift;;
+        -r|--reload)      RELOAD=true; shift;;
+		-i|--interactive) INTERACTIVE=true; shift;;
+        --) shift; break;;
+    esac
+done
+
+if $LIST; then
+    ls -1 ~/.config/zenbu/variable_sets | sed "s/\(.*\)\.yaml/\1/g"
+    exit
+fi
+
+function interactive {
+	echo test2
+	options=$(ls -1 ~/.config/zenbu/variable_sets | sed "s/\(.*\).yaml/\1/g")
+	choice=0
+	current=$(local_var theme)
+	
+	while true; do
+		clear
+		echo "Choose one of the following themes: "
+		echo -e "$(sed "$[$choice+1] s/^.*$/[37;7m&[m/" <<< $options)"
+        echo -e "\nControls:\n  ENTER: Apply wallpaper to all displays\n  [1-N]: Apply wallpaper to specific display\n  [F1-N]: Apply a solid background to specific display\n  ESC | q: Exit"
+		echo -e "\e[$[$choice+1];f"
+		while read -rsn1 ui; do
+            case "$ui" in
+                $'\x1b')    # Handle ESC sequence.
+                    # Flush read. We account for sequences for Fx keys as
+                    # well. 6 should suffice far more then enough.
+                    read -rsn1 -t 0.01 tmp
+                    case "$tmp" in
+                        "[")
+                            read -rsn1 -t 0.01 tmp
+                            case "$tmp" in
+                                "A") [ $choice -gt 0 ] && choice=$[$choice-1];;                    # Arrow Key (UP)
+                                "B") [ $[$choice+1] -lt $(wc -l <<< $options) ] && choice=$[$choice+1];; # Arrow Key (DOWN)
+                            esac
+                            ;;
+                        "") echo -e "\e[$[$(wc -l <<< $options)+8];f"; break 2;;  # ESC Key
+                    esac
+                    # Flush "stdin" with 0.01 sec timeout.
+                    read -rsn5 -t 0.01
+                    break
+                    ;;
+                '')  current=$(awk "NR==$choice+1" <<< $options); 2>/dev/null 1>&2 zenbur $current; break;;
+                "q") echo -e "\e[$[$(wc -l <<< $options)+8];f"; break 2;;
+            esac
+        done
+    done
+	theme=$current
+}
+
+if $INTERACTIVE; then
+	interactive
+else
+	theme=$1
+fi
+
+if $RELOAD; then
+    zenbur $theme
+else
+    zenbu $theme
+fi
+
+if $SAVE; then
+   local_var "theme="$theme
+fi  

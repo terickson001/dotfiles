@@ -33,21 +33,21 @@ function add {
 
 function set_wall {
     if [[ $1 =~ , ]]; then
-        compile $1 | tee >(feh --no-xinerama --bg-fill --magick-timeout 10 -) > "$wallpaper_dir/.cached"
+        compile $1 | tee >(feh --no-xinerama --bg-fill --conversion-timeout 10 -) > "$wallpaper_dir/.cached"
     elif [[ $1 =~ ^:: ]]; then
         screen_dims=$(xrandr -q | perl -lne "print \"\$1x\$2\" if /Screen.*current\s*([0-9]*)\s*x\s*([0-9]*)/")
         bg_color=$(perl -lne "print \$1 if /.*::(.*)/" <<< $1)
         bg_color=${bg_color:-"$default_bg_color"}
-        convert -colorspace sRGB -size $screen_dims canvas:$bg_color png:- | feh --bg-fill --no-xinerama --magick-timeout 10 -
+        convert -colorspace sRGB -size $screen_dims canvas:$bg_color png:- | feh --bg-fill --no-xinerama --conversionq-timeout 10 -
     else
         if $BLUR && $DIM; then
-            convert -colorspace sRGB -size $screen_dims -blur 0x5 -fill black -colorize 40% png:- | feh --no-xinerama --bg-fill --magick-timeout 10 - 2>/dev/null
+            convert -colorspace sRGB -size $screen_dims -blur 0x5 -fill black -colorize 40% png:- | feh --no-xinerama --bg-fill --conversion-timeout 10 - 2>/dev/null
         elif $BLUR; then
-            convert -colorspace sRGB -size $screen_dims -blur 0x5 png:- | feh --no-xinerama --bg-fill --magick-timeout 10 - 2>/dev/null
+            convert -colorspace sRGB -size $screen_dims -blur 0x5 png:- | feh --no-xinerama --bg-fill --conversion-timeout 10 - 2>/dev/null
         elif $DIM; then
-            convert -colorspace sRGB -size $screen_dims -fill black --colorize 40% png:- | feh --no-xinerama --bg-fill --magick-timeout 10 - 2>/dev/null
+            convert -colorspace sRGB -size $screen_dims -fill black --colorize 40% png:- | feh --no-xinerama --bg-fill --conversion-timeout 10 - 2>/dev/null
         else
-            feh --no-xinerama --bg-fill --magick-timeout 10 $wallpaper_dir/$1.* 2>/dev/null
+            feh --no-xinerama --bg-fill --conversion-timeout 10 $wallpaper_dir/$1.* 2>/dev/null
         fi
     fi
     echo "$1" > "$wallpaper_dir/.current"
@@ -232,7 +232,7 @@ wallpaper: wallpaper [-ilsu] [--pattern <pattern>] [wallpaper_setting]
 EOF
 }
 
-TEMP=$(getopt -o "lsip:uhrbda:" --long "add:,list,save,interactive,pattern:,update,help,get-raw,blur,dim" -n "wallpaper" -- "$@")
+TEMP=$(getopt -o "lsip:uhrbda:" --long "add:,load,list,save,interactive,pattern:,update,help,get-raw,blur,dim" -n "wallpaper" -- "$@")
 eval set -- "$TEMP"
 
 while true; do
@@ -265,7 +265,11 @@ if $INTERACTIVE && $RAW; then
     exit
 fi
 if $LOAD; then
-    set_wall $(local_var wallpaper)
+    if [ -f $wallpaper_dir/.cached ]; then
+        feh --no-xinerama --bg-fill --conversion-timeout 10 $wallpaper_dir/.cached
+    else
+        set_wall $(local_var wallpaper)
+    fi
 fi
 if $INTERACTIVE; then
     interactive

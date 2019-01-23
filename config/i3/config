@@ -11,7 +11,7 @@
 
 set $mod Mod4
 
-exec_always --no-startup-id wallpaper $(local_var wallpaper)
+exec_always --no-startup-id wallpaper --load
 exec_always --no-startup-id compton &
 exec_always --no-startup-id polylaunch
 # exec_always --no-startup-id urxvtd -q -o -f &
@@ -26,7 +26,7 @@ new_window pixel 0
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Return exec --no-startup-id alacritty --live-config-reload
 bindsym $mod+Shift+Return exec --no-startup-id firefox
 
 # kill focused window

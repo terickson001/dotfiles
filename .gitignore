@@ -19,6 +19,7 @@
 
 !Xresources.d/
 !Xresources.d/**
+Xresources.d/*zenbu*
 
 !Xsession.d/
 !Xsession.d/**
@@ -33,6 +34,7 @@
 # Misc files
 !colors/
 !colors/**
+colors/*zenbu*
 !vimrc
 !vimperatorrc
 !bin/
