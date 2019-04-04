@@ -1,23 +1,36 @@
 #! /usr/bin/env bash
 
 update() {
-    echo "Updating utils..."
     cd $HOME/.utils/
-    while read -r line
-    do
+    while read -r line; do
         [[ $line = "" ]] && continue
         if [[ $line =~ \[.*\] ]]; then
             mode=$(sed "s/\[\(.*\)\]/\1/" <<< $line)
             continue
         fi
         src=$line
-
+        
+        echo "Updating '$src'..."
         if [[ $mode = "github" ]]; then
-            [[ -d ${line#*/} ]] && continue;
-            git clone https://github.com/$src
+            dir=$(sed "s/.*\/\([^\.]*\)\(\.git\)*$/\1/" <<< $src)
+            if [[ -d $dir ]]; then
+                cd $dir
+                git fetch origin
+                git reset --hard origin/master
+                cd ..
+            else
+                git clone https://github.com/$src
+            fi
         elif [[ $mode = "git" ]]; then
-            [[ -d ${line#*/} ]] && continue;
-            git clone $src
+            dir=$(sed "s/.*\/\([^\.]*\)\(\.git\)*$/\1/" <<< $src)
+            if [[ -d $dir ]]; then
+                cd $dir
+                git fetch origin
+                git reset --hard origin/master
+                cd ..
+            else
+                git clone $src
+            fi
         else
             echo "Sources for '$mode' are not yet implemented"
             continue
@@ -30,12 +43,12 @@ update() {
 
 get_dict() {
     dest=${1:-dict}
-    cp $HOME/.utils/english-words/words.txt $dest
+    ln -s $HOME/.utils/english-words/words.txt $dest
 }
 
 get_gb() {
     dest=${1:-gb}
-    cp -r $HOME/.utils/gb $dest
+    ln -s $HOME/.utils/gb $dest
 }
 
 op=$1; shift

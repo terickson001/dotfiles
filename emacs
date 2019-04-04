@@ -18,7 +18,7 @@
      ("melpa" . "http://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (fastnav nlinum vlf yasnippet-classic-snippets web-mode sass-mode yaml-mode ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit yasnippet-snippets yasnippet iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit haskell-mode)))
+    (ox-twbs flycheck htmlize org-bullets fastnav nlinum vlf yasnippet-classic-snippets web-mode sass-mode yaml-mode ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit yasnippet-snippets yasnippet iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit haskell-mode)))
  '(search-default-mode t)
  '(search-highlight nil)
  '(send-mail-function (quote sendmail-send-it)))
@@ -40,6 +40,13 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(delete-selection-mode t)
+(transient-mark-mode t)
+(setq x-select-enable-clipboard t)
+
+(setq echo-keystrokes 0.1)
 
 (require 'powerline)
 (powerline-default-theme)
@@ -79,6 +86,9 @@
  'elscreen-find-file )
 
 (require 'typing-practice)
+
+(load-file "~/.emacs.d/manual/discord-emacs.el")
+(discord-emacs-run "384815451978334208")
 
 (electric-pair-mode 0)
 
@@ -136,6 +146,9 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
+;; emacs-lisp-mode
+(add-to-list 'auto-mode-alist '("\\emacs$" . emacs-lisp-mode))
+
 ;; Disable where necessary (i.e. term-mode)
 (global-nlinum-mode t)
 
@@ -167,16 +180,104 @@
    ("\\_<\\(\\(?:NULL\\|_\\(?:Bool\\|Complex\\|Imaginary\\|_\\(?:a\\(?:\\(?:sm\\|ttribute\\)__\\)\\|declspec\\)\\)\\|a\\(?:sm\\|uto\\)\\|break\\|c\\(?:ase\\|har\\|on\\(?:st\\|tinue\\)\\)\\|d\\(?:efault\\|o\\(?:uble\\)?\\)\\|e\\(?:lse\\|num\\|xtern\\)\\|f\\(?:loat\\|or\\)\\|goto\\|i\\(?:f\\|n\\(?:line\\|t\\)\\)\\|long\\|re\\(?:gister\\|strict\\|turn\\)\\|s\\(?:hort\\|i\\(?:gned\\|zeof\\)\\|t\\(?:atic\\|ruct\\)\\|witch\\)\\|t\\(?:ype\\(?:\\(?:de\\|o\\)f\\)\\)\\|un\\(?:ion\\|signed\\)\\|vo\\(?:id\\|latile\\)\\|while\\)\\)\\_>" 1 'font-lock-keyword-face append)
    ("\\_<\\(true\\|false\\)\\_>" 1 'font-lock-constant-face)
    ("\\<\\(\\sw+\\) ?(" 1 'font-lock-function-name-face)
+   ("\\b\\([0-9]*\\.[0-9]+f\\{0,1\\}\\)\\b" 1 'font-lock-constant-face)
    ("\\b\\(\\(0\\|[1-9][0-9]*\\)[uUlL]*\\)\\b" 1 'font-lock-constant-face)
    ("\\([|!.+=&/%*:^~<>-]+\\)" 1 'font-lock-builtin-face)
    ("\\([][,(){};]+\\)" 1 'font-lock-delim-face) ))
 
-(add-hook
- 'c-mode-hook
- '(lambda ()
-    (face-remap-add-relative font-lock-variable-name-face '(custom-face-get-current-spec 'default)) ;; Remove highlighting of variable names
-    (setq c-basic-offset 4)
-    (c-set-offset 'substatement-open 0) ))
+(defun my/c-initialization-hook ()
+  (define-key c-mode-base-map (kbd "RET") 'c-context-line-break))
+(add-hook 'c-initialization-hook 'my/c-initialization-hook)
+
+(defun my/c-mode-hook ()
+  (face-remap-add-relative font-lock-variable-name-face '(custom-face-get-current-spec 'default)) ;; Remove highlighting of variable names
+  (setq c-basic-offset 4)
+  (c-set-offset 'substatement-open 0)
+  (c-set-offset 'brace-list-intro '+)
+  (c-set-offset 'arglist-intro '+)
+  (c-set-offset 'arglist-close 0))
+
+(add-hook 'c-mode-hook 'my/c-mode-hook)
+
+;; Org-Mode
+(require 'org-install)
+(require 'org)
+
+(defun my/org-mode-hook ()
+  (org-bullets-mode t))
+
+(add-hook 'org-mode-hook 'my/org-mode-hook)
+
+(setq org-hide-leading-stars t
+      org-ellipsis "..."
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-directory "~/.org")
+
+(defun org-file-path (filename)
+  "Return the absolute address of an org file, given its relative name."
+  (concat (file-name-as-directory org-directory) filename))
+
+(setq org-index-file (org-file-path "index.org")
+      org-archive-location (concat (org-file-path "archive.org") "::* From %s")
+      org-agenda-files (list org-index-file))
+
+(defun my/mark-done-and-archive ()
+  "Mark the state of an org-mode item as DONE and archive it."
+  (interactive)
+  (org-todo 'done)
+  (org-archive-subtree))
+
+(define-key org-mode-map (kbd "C-c C-x C-s") 'my/mark-done-and-archive)
+    
+(setq org-log-done 'time)
+(setq org-capture-templates
+      '(("r" "Finished book"
+         table-line (file "~/.org/notes/books-read.org")
+         "| %^{Title} | %^{Author} | %u |")
+        ("b" "Books to Read"
+         table-line (file "~/.org/notes/books-to-read.org")
+         "| %^{Title} | %^{Author} | %u |")
+        ("t" "Todo"
+         entry
+         (file+headline org-index-file "Inbox")
+         "* TODO %?\n")))
+(setq org-refile-use-outline-path t
+      org-outline-path-complete-in-steps nil)
+
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cc" 'org-capture)
+
+(defun my/open-index-file ()
+  "Open the master org TODO list."
+  (interactive)
+  (find-file org-index-file)
+  (flycheck-mode -1)
+  (end-of-buffer))
+
+(global-set-key (kbd "C-c i") 'my/open-index-file)
+
+(defun org-capture-todo ()
+  (interactive)
+  (org-capture :keys "t"))
+
+(global-set-key (kbd "M-n") 'org-capture-todo)
+(add-hook 'haskell-mode-hook
+          (lambda () (local-set-key (kbd "M-n") 'org-capture-todo)))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (haskell . t)
+   (C . t)
+   (python . t)))
+
+(setq org-confirm-babel-evaluate nil)
+(setq org-export-with-smart-quotes t)
+;; GLSL mode
+(load "~/.emacs.d/manual/glsl-mode")
+(add-to-list 'auto-mode-alist '("\\.\\(vs\\|fs\\|gs\\|glsl\\|vert\\|frag\\|geom\\)$" . glsl-mode))
 
 ;; odin-mode
 (load "~/.emacs.d/manual/odin-mode")

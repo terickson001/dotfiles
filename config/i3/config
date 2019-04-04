@@ -17,6 +17,7 @@ exec_always --no-startup-id polylaunch
 # exec_always --no-startup-id urxvtd -q -o -f &
 exec --no-startup-id multihead_initWorkspaces
 
+for_window [title="\$float\$"] floating enable
 new_window pixel 0
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
