@@ -1,122 +1,273 @@
-(defvar odin-mode-hook nil)
-(defvar odin-mode-map
-  (let ((map (make-keymap)))
-    (define-key map "\C-j" 'newline-and-indent)
-    map)
-  "Keymap for Odin major mode")
+;;; odin-mode.el --- A minor mode for odin
 
+;; Author: Ethan Morgan
+;; Keywords: odin, language, languages, mode
+;; Package-Requires: ((emacs "24.1"))
+;; Homepage: https://github.com/glassofethanol/odin-mode
+
+;; This file is NOT part of GNU Emacs.
+
+;;; Code:
+
+(require 'cl)
+(require 'rx)
+(require 'js)
+
+(defconst odin-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?\" "\"" table)
+    (modify-syntax-entry ?\\ "\\" table)
+
+    ;; additional symbols
+    (modify-syntax-entry ?' "." table)
+    (modify-syntax-entry ?: "." table)
+    (modify-syntax-entry ?+ "." table)
+    (modify-syntax-entry ?- "." table)
+    (modify-syntax-entry ?% "." table)
+    (modify-syntax-entry ?& "." table)
+    (modify-syntax-entry ?| "." table)
+    (modify-syntax-entry ?^ "." table)
+    (modify-syntax-entry ?! "." table)
+    (modify-syntax-entry ?$ "/" table)
+    (modify-syntax-entry ?= "." table)
+    (modify-syntax-entry ?< "." table)
+    (modify-syntax-entry ?> "." table)
+    (modify-syntax-entry ?? "." table)
+
+    ;; Need this for #directive regexes to work correctly
+    (modify-syntax-entry ?#   "_" table)
+
+    ;; Modify some syntax entries to allow nested block comments
+    (modify-syntax-entry ?/ ". 124b" table)
+    (modify-syntax-entry ?* ". 23n" table)
+    (modify-syntax-entry ?\n "> b" table)
+    (modify-syntax-entry ?\^m "> b" table)
+
+    table))
+
+(defconst odin-builtins
+  '("len" "cap"
+    "typeid_of" "type_info_of"
+    "swizzle" "complex" "real" "imag" "conj"
+    "min" "max" "abs" "clamp"
+    "expand_to_tuple"
+
+    "init_global_temporary_allocator"
+    "copy" "pop" "unordered_remove" "ordered_remove" "clear" "reserve"
+    "resize" "new" "new_clone" "free" "free_all" "delete" "make"
+    "clear_map" "reserve_map" "delete_key" "append_elem" "append_elems"
+    "append" "append_string" "clear_dynamic_array" "reserve_dynamic_array"
+    "resize_dynamic_array" "incl_elem" "incl_elems" "incl_bit_set"
+    "excl_elem" "excl_elems" "excl_bit_set" "incl" "excl" "card"
+    "assert" "panic" "unimplemented" "unreachable"))
+
+(defconst odin-keywords
+  '("import" "foreign" "package"
+    "when" "if" "else" "for" "switch" "in" "notin" "do" "case"
+    "break" "continue" "fallthrough" "defer" "return" "proc"
+    "struct" "union" "enum" "bit_field" "bit_set" "map" "dynamic"
+    "auto_cast" "cast" "transmute" "distinct" "opaque"
+    "using" "inline" "no_inline"
+    "size_of" "align_of" "offset_of" "type_of"
+
+    "context"
+    ;; "_"
+
+    ;; Reserved
+    "macro" "const"))
+
+(defconst odin-constants
+  '("nil" "true" "false"
+    "ODIN_OS" "ODIN_ARCH" "ODIN_ENDIAN" "ODIN_VENDOR"
+    "ODIN_VERSION" "ODIN_ROOT" "ODIN_DEBUG"))
+
+(defconst odin-typenames
+  '("bool" "b8" "b16" "b32" "b64"
+
+    "int"  "i8" "i16" "i32" "i64"
+    "i16le" "i32le" "i64le"
+    "i16be" "i32be" "i64be"
+    "i128" "u128"
+    "i128le" "u128le"
+    "i128be" "u128be"
+
+    "uint" "u8" "u16" "u32" "u64"
+    "u16le" "u32le" "u64le"
+    "u16be" "u32be" "u64be"
+
+    "f32" "f64"
+    "complex64" "complex128"
+
+    "rune"
+    "string" "cstring"
+
+    "uintptr" "rawptr"
+    "typeid" "any"
+    "byte"))
+
+(defconst odin-attributes
+  '("builtin"
+    "export"
+    "static"
+    "deferred_in" "deferred_none" "deferred_out"
+    "default_calling_convention" "link_name" "link_prefix"
+    "deprecated" "private" "thread_local"))
+
+(defconst odin-directives
+  '("#align" "#packed"
+    "#raw_union"
+    "#complete"
+    "#no_alias" "#type"
+    "#c_vararg"
+    "#assert"
+    "#caller_location" "#file" "#line" "#location" "#procedure"
+    "#load"
+    "#defined"
+    "#require_results"
+    "#bounds_check" "#no_bounds_check"))
+
+(defun odin-wrap-word-rx (s)
+  (concat "\\<" s "\\>"))
+
+(defun odin-wrap-keyword-rx (s)
+  (concat "\\(?:\\S.\\_<\\|\\`\\)" s "\\_>"))
+
+(defun odin-wrap-directive-rx (s)
+  (concat "\\_<" s "\\>"))
+
+(defun odin-wrap-attribute-rx (s)
+  (concat "[[:space:]\n]*@[[:space:]\n]*(?[[:space:]\n]*" s "\\>"))
+
+(defun odin-keywords-rx (keywords)
+  "build keyword regexp"
+  (odin-wrap-keyword-rx (regexp-opt keywords t)))
+
+(defun odin-directives-rx (directives)
+  (odin-wrap-directive-rx (regexp-opt directives t)))
+
+(defun odin-attributes-rx (attributes)
+  (odin-wrap-attribute-rx (regexp-opt attributes t)))
+
+(defconst odin-hat-type-rx (rx (group (and "^" (1+ (any word "." "_"))))))
+(defconst odin-dollar-type-rx (rx (group "$" (or (1+ (any word "_")) (opt "$")))))
+(defconst odin-number-rx
+  (rx (and
+       symbol-start
+       (or (and (+ digit) (opt (and (any "eE") (opt (any "-+")) (+ digit))))
+           (and "0" (any "xX") (+ hex-digit)))
+       (opt (and (any "_" "A-Z" "a-z") (* (any "_" "A-Z" "a-z" "0-9"))))
+       symbol-end)))
+
+(defconst odin-font-lock-defaults
+  `(
+    ;; Types
+    (,odin-hat-type-rx 1 font-lock-type-face)
+    (,odin-dollar-type-rx 1 font-lock-type-face)
+    (,(odin-keywords-rx odin-typenames) 1 font-lock-type-face)
+
+    ;; Hash directives
+    (,(odin-directives-rx odin-directives) 1 font-lock-preprocessor-face)
+
+    ;; At directives
+    (,(odin-attributes-rx odin-attributes) 1 font-lock-preprocessor-face)
+
+    ;; Keywords
+    (,(odin-keywords-rx odin-keywords) 1 font-lock-keyword-face)
+
+    ;; single quote characters
+    ("\\('[[:word:]]\\)\\>" 1 font-lock-constant-face)
+
+    ;; Variables
+    (,(odin-keywords-rx odin-builtins) 1 font-lock-variable-name-face)
+
+    ;; Constants
+    (,(odin-keywords-rx odin-constants) 1 font-lock-constant-face)
+
+    ;; Strings
+    ("\\\".*\\\"" . font-lock-string-face)
+
+    ;; Numbers
+    (,(odin-wrap-word-rx odin-number-rx) . font-lock-constant-face)
+
+    ("---" . font-lock-constant-face)
+    ("\\.\\.<" . font-lock-constant-face)
+    ("\\.\\." . font-lock-constant-face)
+    ))
+
+;; add setq-local for older emacs versions
+(unless (fboundp 'setq-local)
+  (defmacro setq-local (var val)
+    `(set (make-local-variable ',var) ,val)))
+
+(defconst odin--defun-rx "\(.*\).*\{")
+
+(defmacro odin-paren-level ()
+  `(car (syntax-ppss)))
+
+(defun odin-line-is-defun ()
+  "return t if current line begins a procedure"
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (let (found)
+      (while (and (not (eolp)) (not found))
+        (if (looking-at odin--defun-rx)
+            (setq found t)
+          (forward-char 1)))
+      found)))
+
+(defun odin-beginning-of-defun (&optional count)
+  "Go to line on which current function starts."
+  (interactive)
+  (let ((orig-level (odin-paren-level)))
+    (while (and
+            (not (odin-line-is-defun))
+            (not (bobp))
+            (> orig-level 0))
+      (setq orig-level (odin-paren-level))
+      (while (>= (odin-paren-level) orig-level)
+        (skip-chars-backward "^{")
+        (backward-char))))
+  (if (odin-line-is-defun)
+      (beginning-of-line)))
+
+(defun odin-end-of-defun ()
+  "Go to line on which current function ends."
+  (interactive)
+  (let ((orig-level (odin-paren-level)))
+    (when (> orig-level 0)
+      (odin-beginning-of-defun)
+      (end-of-line)
+      (setq orig-level (odin-paren-level))
+      (skip-chars-forward "^}")
+      (while (>= (odin-paren-level) orig-level)
+        (skip-chars-forward "^}")
+        (forward-char)))))
+
+(defalias 'odin-parent-mode
+ (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
+
+;;;###autoload
+(define-derived-mode odin-mode odin-parent-mode "Odin"
+  :syntax-table odin-mode-syntax-table
+  :group 'odin
+  (setq bidi-paragraph-direction 'left-to-right)
+  (setq-local require-final-newline mode-require-final-newline)
+  (setq-local parse-sexp-ignore-comments t)
+  (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
+  (setq-local comment-start "/*")
+  (setq-local comment-end "*/")
+  (setq-local indent-line-function 'js-indent-line)
+  (setq-local font-lock-defaults '(odin-font-lock-defaults))
+  (setq-local beginning-of-defun-function 'odin-beginning-of-defun)
+  (setq-local end-of-defun-function 'odin-end-of-defun)
+
+  (font-lock-fontify-buffer))
+
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-mode))
-
-(defconst odin-font-lock-keywords-1
-  (list
-   '("\\<\\(import\\|export\\|foreign\\|if\\|else\\|when\\|for\\|in\\|defer\\|switch\\|return\\|const\\|fallthrough\\|break\\|continue\\|case\\|static\\|dynamic\\|using\\|do\\|inline\\|no_inline\\|asm\\|yield\\|await\\|distinct\\|proc\\)\\>" . font-lock-keyword-face)
-   '("#\\(assert\\|defined\\)\\>" . font-lock-builtin-face)
-   '("\\<\\(context\\|cast\\|transmute\\|vector\\|assert\\)\\>" . font-lock-builtin-face))
-  "Minimal highlightning for Odin major mode")
-
-(defconst odin-font-lock-keywords-2
-  (append odin-font-lock-keywords-1
-	  (list
-	   '("\\<\\(type\\|macro\\|struct\\|enum\\|union\\|map\\|bit_field\\)\\>" . font-lock-keyword-face)
-	   '("\\<\\(size_of\\|align_of\\|offset_of\\|type_of\\|type_info_of\\)\\>" . font-lock-builtin-face)
-	   '("\\<\\(true\\|false\\|nil\\)\\>" . font-lock-constant-face)))
-  "Additional keywords to highlight for Odin major mode")
-
-(defconst odin-font-lock-keywords-3
-  (append odin-font-lock-keywords-2
-	  (list
-	   '("\\<\\(i8\\|i16\\|i32\\|i64\\|int\\|u8\\|u16\\|u32\\|u64\\|uint\\|uintptr\\|f16\\|f32\\|f64\\|complex32\\|complex64\\|complex128\\|bool\\|b8\\|b16\\|b32\\|b64\\|byte\\|string\\|rune\\|rawptr\\|any\\)\\>" . font-lock-type-face)
-       '("\\_<\\([-+]?\\([[:digit:]_]*\\.[[:digit:]][[:digit:]_]*\\([eE][[:digit:]]+\\)?\\|0b[01][01_]*\\|0o[0-7][0-7_]*\\|0x[[:xdigit:]][[:xdigit:]_]*\\|[[:digit:]][[:digit:]_]*\\)[i]?\\)\\_>" . font-lock-constant-face)
-       '("\\_<\\([a-zA-Z_][a-zA-Z0-9_]*\\)(" 1 font-lock-function-name-face)))
-  "Highlighting for basic types in Odin major mode")
-
-(defvar odin-font-lock-keywords odin-font-lock-keywords-3
-  "Default highlightning level for Odin major mode")
-
-(defun to-previous-brace ()
-  "Jump to previous brace"
-  (interactive)
-  (if (eq ?} (char-after))
-      (backward-char))
-  (let ((braces 1))
-    (while (> braces 0)
-      (if (eq ?} (char-after))
-          (setq braces (+ braces 1))
-        (if (eq ?{ (char-after))
-            (setq braces (- braces 1))))
-      (backward-char))
-    (forward-char)))
-
-(defun odin-indent-line ()
-  "Indent current line as Odin code"
-  (interactive)
-  (beginning-of-line)
-  (if (bobp)
-      (indent-line-to 0)
-   (let ((not-indented t) cur-indent)
-      (if (looking-at ".*}")
-          (progn
-            (save-excursion
-              ;(forward-line -1)
-                                        ;(to-previous-brace)
-              (backward-up-list)
-              (setq cur-indent (current-indentation)))
-            (if (< cur-indent 0)
-                (setq cur-indent 0)))
-        (save-excursion 
-          (while not-indented
-            (forward-line -1)
-            (if (looking-at ".*}")
-                (progn
-                  (setq cur-indent (current-indentation))
-                  (setq not-indented nil))
-              (if (looking-at ".*{")
-                  (progn
-                    (setq cur-indent (+ (current-indentation) default-tab-width))
-                    (setq not-indented nil))
-                (if (bobp)
-                    (setq not-indented nil)))))))
-      (if cur-indent
-          (indent-line-to cur-indent)
-        (indent-line-to 0)))))
-
-;; (defun odin-indent-line ()
-;;   "Indent current line as Odin code"
-;;   (interactive)
-;;   (backward-up-list)
-;;   (indent-line-to cur-indent))
-
-(defvar odin-mode-syntax-table
-  (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?_ "w" st)
-    (modify-syntax-entry ?/ ". 124b" st)
-    (modify-syntax-entry ?* ". 23" st)
-    (modify-syntax-entry ?\n "> b" st)
-    st)
-  "Syntax table for the Odin major mode")
-
-(defun odin-mode ()
-  "Major mode for the Odin programming language"
-  (interactive)
-  (kill-all-local-variables)
-  (set-syntax-table odin-mode-syntax-table)
-  (use-local-map odin-mode-map)
-  (set (make-local-variable 'font-lock-defaults) '(odin-font-lock-keywords))
-  (set (make-local-variable 'indent-line-function) 'odin-indent-line)
-
-  (setq major-mode 'odin-mode)
-  (setq mode-name "Odin")
-  (run-hooks 'odin-mode-hook))
-
-(defun odin-autoindent ()
-  (if (and (eq major-mode 'odin-mode) (looking-back "[{}]"))
-      (save-excursion
-        (indent-according-to-mode))))
-
-(add-hook 'post-self-insert-hook 'odin-autoindent)
 
 (provide 'odin-mode)
 
 
-
-
+;;; odin-mode.el ends here
