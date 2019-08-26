@@ -17,7 +17,7 @@
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (gitignore-mode lua-mode naysayer-theme pyvenv elpy ox-twbs flycheck htmlize org-bullets fastnav nlinum vlf yasnippet-classic-snippets web-mode sass-mode yaml-mode ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit yasnippet-snippets yasnippet iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit haskell-mode)))
+    (gitignore-mode lua-mode naysayer-theme flycheck htmlize org-bullets fastnav nlinum ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit)))
  '(search-default-mode t)
  '(search-highlight nil)
  '(send-mail-function (quote sendmail-send-it)))
@@ -31,8 +31,6 @@
 
 (load "server")
 (unless (server-running-p) (server-start))
-
-(elpy-enable)
 
 (add-to-list 'load-path "~/.emacs.d/manual")
 (let ((default-directory "~/.emacs.d/manual"))
@@ -54,16 +52,13 @@
 (require 'powerline)
 (powerline-default-theme)
 
-;; (require 'evil)
-;; (evil-mode 1)
-
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 ;; (load-theme 'base16-zenbu t)
-(load-theme 'naysayer t)
 ;; (defvar base16-colors base16-zenbu-colors)
+(load-theme 'naysayer t)
 (defvar base16-colors nil)
 
 (define-globalized-minor-mode global-highlight-parentheses-mode
@@ -75,7 +70,7 @@
 (global-set-key (kbd "S-<f1>")
   (lambda ()
     (interactive)
-    (dired ".")))
+    (dired ".") ))
 
 (elscreen-start)
 
@@ -195,81 +190,82 @@
 (add-hook 'c-mode-hook 'my/c-mode-hook)
 
 ;; Org-Mode
-(require 'org-install)
-(require 'org)
+;; (require 'org-install)
+;; (require 'org)
 
-(defun my/org-mode-hook ()
-  (org-bullets-mode t))
+;; (defun my/org-mode-hook ()
+;;   (org-bullets-mode t))
 
-(add-hook 'org-mode-hook 'my/org-mode-hook)
+;; (add-hook 'org-mode-hook 'my/org-mode-hook)
 
-(setq org-hide-leading-stars t
-      org-ellipsis "..."
-      org-src-fontify-natively t
-      org-src-tab-acts-natively t
-      org-directory "~/.org")
+;; (setq org-hide-leading-stars t
+;;       org-ellipsis "..."
+;;       org-src-fontify-natively t
+;;       org-src-tab-acts-natively t
+;;       org-directory "~/.org")
 
-(defun org-file-path (filename)
-  "Return the absolute address of an org file, given its relative name."
-  (concat (file-name-as-directory org-directory) filename))
+;; (defun org-file-path (filename)
+;;   "Return the absolute address of an org file, given its relative name."
+;;   (concat (file-name-as-directory org-directory) filename))
 
-(setq org-index-file (org-file-path "index.org")
-      org-archive-location (concat (org-file-path "archive.org") "::* From %s")
-      org-agenda-files (list org-index-file))
+;; (setq org-index-file (org-file-path "index.org")
+;;       org-archive-location (concat (org-file-path "archive.org") "::* From %s")
+;;       org-agenda-files (list org-index-file))
 
-(defun my/mark-done-and-archive ()
-  "Mark the state of an org-mode item as DONE and archive it."
-  (interactive)
-  (org-todo 'done)
-  (org-archive-subtree))
+;; (defun my/mark-done-and-archive ()
+;;   "Mark the state of an org-mode item as DONE and archive it."
+;;   (interactive)
+;;   (org-todo 'done)
+;;   (org-archive-subtree))
 
-(define-key org-mode-map (kbd "C-c C-x C-s") 'my/mark-done-and-archive)
+;; (define-key org-mode-map (kbd "C-c C-x C-s") 'my/mark-done-and-archive)
     
-(setq org-log-done 'time)
-(setq org-capture-templates
-      '(("r" "Finished book"
-         table-line (file "~/.org/notes/books-read.org")
-         "| %^{Title} | %^{Author} | %u |")
-        ("b" "Books to Read"
-         table-line (file "~/.org/notes/books-to-read.org")
-         "| %^{Title} | %^{Author} | %u |")
-        ("t" "Todo"
-         entry
-         (file+headline org-index-file "Inbox")
-         "* TODO %?\n")))
-(setq org-refile-use-outline-path t
-      org-outline-path-complete-in-steps nil)
+;; (setq org-log-done 'time)
+;; (setq org-capture-templates
+;;       '(("r" "Finished book"
+;;          table-line (file "~/.org/notes/books-read.org")
+;;          "| %^{Title} | %^{Author} | %u |")
+;;         ("b" "Books to Read"
+;;          table-line (file "~/.org/notes/books-to-read.org")
+;;          "| %^{Title} | %^{Author} | %u |")
+;;         ("t" "Todo"
+;;          entry
+;;          (file+headline org-index-file "Inbox")
+;;          "* TODO %?\n")))
+;; (setq org-refile-use-outline-path t
+;;       org-outline-path-complete-in-steps nil)
 
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key global-map "\C-cc" 'org-capture)
+;; (define-key global-map "\C-cl" 'org-store-link)
+;; (define-key global-map "\C-ca" 'org-agenda)
+;; (define-key global-map "\C-cc" 'org-capture)
 
-(defun my/open-index-file ()
-  "Open the master org TODO list."
-  (interactive)
-  (find-file org-index-file)
-  (flycheck-mode -1)
-  (end-of-buffer))
+;; (defun my/open-index-file ()
+;;   "Open the master org TODO list."
+;;   (interactive)
+;;   (find-file org-index-file)
+;;   (flycheck-mode -1)
+;;   (end-of-buffer))
 
-(global-set-key (kbd "C-c i") 'my/open-index-file)
+;; (global-set-key (kbd "C-c i") 'my/open-index-file)
 
-(defun org-capture-todo ()
-  (interactive)
-  (org-capture :keys "t"))
+;; (defun org-capture-todo ()
+;;   (interactive)
+;;   (org-capture :keys "t"))
 
-(global-set-key (kbd "M-n") 'org-capture-todo)
-(add-hook 'haskell-mode-hook
-          (lambda () (local-set-key (kbd "M-n") 'org-capture-todo)))
+;; (global-set-key (kbd "M-n") 'org-capture-todo)
+;; (add-hook 'haskell-mode-hook
+;;           (lambda () (local-set-key (kbd "M-n") 'org-capture-todo)))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (haskell . t)
-   (C . t)
-   (python . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((emacs-lisp . t)
+;;    (haskell . t)
+;;    (C . t)
+;;    (python . t)))
 
-(setq org-confirm-babel-evaluate nil)
-(setq org-export-with-smart-quotes t)
+;; (setq org-confirm-babel-evaluate nil)
+;; (setq org-export-with-smart-quotes t)
+
 ;; GLSL mode
 (load "~/.emacs.d/manual/glsl-mode")
 (add-to-list 'auto-mode-alist '("\\.\\(vs\\|fs\\|gs\\|glsl\\|vert\\|frag\\|geom\\)$" . glsl-mode))
@@ -279,57 +275,57 @@
 (defvar default-tab-width 4)
 ;; Mail
 
-(autoload 'wl "wl" "Wanderlust" t)
-;; IMAP, gmail:
-(setq
- wl-stay-folder-window t
- wl-folder-window-width 25
+;; (autoload 'wl "wl" "Wanderlust" t)
+;; ;; IMAP, gmail:
+;; (setq
+;;  wl-stay-folder-window t
+;;  wl-folder-window-width 25
 
- wl-smtp-connection-type 'starttls
- wl-smtp-posting-port 587
- wl-smtp-authenticate-type "plain"
- wl-smtp-posting-user "tyler"
- wl-smtp-posting-server "smtp.gmail.com"
- wl-local-domain "gmail.com"
+;;  wl-smtp-connection-type 'starttls
+;;  wl-smtp-posting-port 587
+;;  wl-smtp-authenticate-type "plain"
+;;  wl-smtp-posting-user "tyler"
+;;  wl-smtp-posting-server "smtp.gmail.com"
+;;  wl-local-domain "gmail.com"
 
- wl-from "Me <me@tylererickson.com>"
+;;  wl-from "Me <me@tylererickson.com>"
 
- wl-fcc ".sent"
- wl-fcc-force-as-read t
- wl-default-folder "%inbox"
- wl-default-spec "%"
- wl-draft-folder ".drafts"
- wl-trash-folder ".trash"
- wl-spam-folder ".trash"
- wl-queue-folder ".queue"
+;;  wl-fcc ".sent"
+;;  wl-fcc-force-as-read t
+;;  wl-default-folder "%inbox"
+;;  wl-default-spec "%"
+;;  wl-draft-folder ".drafts"
+;;  wl-trash-folder ".trash"
+;;  wl-spam-folder ".trash"
+;;  wl-queue-folder ".queue"
 
- wl-folder-check-async t
+;;  wl-folder-check-async t
  
- ;; hide many fields from message buffers
- wl-message-ignored-field-list '("^.*:")
- wl-message-visible-field-list
- '("^\\(To\\|Cc\\):"
-   "^Subject:"
-   "^\\(From\\|Reply-To\\):"
-   "^Organization:"
-   "^Message-Id:"
-   "^\\(Posted\\|Date\\):"
-   )
- wl-message-sort-field-list
- '("^From"
-   "^Organization:"
-   "^X-Attribution:"
-   "^Subject"
-   "^Date"
-   "^To"
-   "^Cc")
+;;  ;; hide many fields from message buffers
+;;  wl-message-ignored-field-list '("^.*:")
+;;  wl-message-visible-field-list
+;;  '("^\\(To\\|Cc\\):"
+;;    "^Subject:"
+;;    "^\\(From\\|Reply-To\\):"
+;;    "^Organization:"
+;;    "^Message-Id:"
+;;    "^\\(Posted\\|Date\\):"
+;;    )
+;;  wl-message-sort-field-list
+;;  '("^From"
+;;    "^Organization:"
+;;    "^X-Attribution:"
+;;    "^Subject"
+;;    "^Date"
+;;    "^To"
+;;    "^Cc")
 
- elmo-imap4-default-server "imap.gmail.com"
- elmo-imap4-default-user "tcerickson98@gmail.com"
- elmo-imap4-default-authenticate-type 'clear
- elmo-imap4-default-port '993
- elmo-imap4-default-stream-type 'ssl
+;;  elmo-imap4-default-server "imap.gmail.com"
+;;  elmo-imap4-default-user "tcerickson98@gmail.com"
+;;  elmo-imap4-default-authenticate-type 'clear
+;;  elmo-imap4-default-port '993
+;;  elmo-imap4-default-stream-type 'ssl
 
- ;; For non ascii-characters in folder-names
- elmo-imap4-use-modified-utf7 t )
-(put 'downcase-region 'disabled nil)
+;;  ;; For non ascii-characters in folder-names
+;;  elmo-imap4-use-modified-utf7 t )
+;; (put 'downcase-region 'disabled nil)
