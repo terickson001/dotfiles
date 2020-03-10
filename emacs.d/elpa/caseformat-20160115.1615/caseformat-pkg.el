@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "caseformat" "20160115.1615" "Format based letter case converter" '((emacs "24") (cl-lib "0.5") (dash "2.12.1") (s "1.10.0")) :commit "92a31f6a7cae0b4e2af106cd6f2b0abe6c2d8921" :keywords '("convenience") :authors '(("Hiroki YAMAKAWA" . "s06139@gmail.com")) :maintainer '("Hiroki YAMAKAWA" . "s06139@gmail.com") :url "https://github.com/HKey/caseformat")

@@ -58,7 +58,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 "" End Vundle Setup
 
-
+set mouse=a
 " Alt key fix
 let c='a'
 while c <= 'z'
@@ -70,6 +70,10 @@ endw
 " <C-;> Fix
 map  <Esc>[; <C-;>
 map! <Esc>[; <C-;>
+
+" Emacs style indent
+map <silent> <Tab> ==
+imap <silent> <Tab> <C-O>==
 
 set timeout
 
@@ -153,7 +157,7 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDDefaultNesting = 0
 let g:NERDCustomDelimiters = { 'armasm': { 'left': '@'}, 'odin': { 'left': '//', 'leftALT': '/*', 'rightALT': '*/'} }
 
-imap <C-;> <Plug>NERDCommenterInsert
+imap <C-;> <Plug>NERDCommenterInvert
 imap <C-Space> <C-X><C-O><C-P>
 
 "iunmap <Leader> (Causes Delay when typing '\' in insert mode)

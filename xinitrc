@@ -26,7 +26,7 @@ if [[ -f $HOME/.config/xmodmap/xmodmap.config ]]; then
     sleep 1 && xmodmap $HOME/.config/xmodmap/xmodmap.config && echo "SUCCEEDED" > ~/xmodmap_status || echo "FAILED" > ~/xmodmap_status
 fi
 
-mopidy &
+spotifyd
 
 session=${1:-i3}
 

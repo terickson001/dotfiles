@@ -1,0 +1,71 @@
+colors:
+  background:         "#082628"
+  foreground:         "#d2b58d"
+  cursor:             "#bfbec3"
+  black:
+    normal:           "#082628"
+    bold:             "#435573"
+  red:
+    normal:           "#bf616a"
+    bold:             "#bf616a"
+  green:
+    normal:           "#a3be8c"
+    bold:             "#a3be8c"
+  yellow:
+    normal:           "#ebcb8b"
+    bold:             "#ebcb8b"
+  blue:
+    normal:           "#8fa1b3"
+    bold:             "#8fa1b3"
+  magenta:
+    normal:           "#b48ead"
+    bold:             "#b48ead"
+  cyan:
+    normal:           "#96b5b4"
+    bold:             "#96b5b4"
+  white:
+    normal:           "#d2b58d"
+    bold:             "#d2b58d"
+
+termcolors:
+    color00: "{{ colors.black.normal }}"   # Base 00 - Black
+    color01: "{{ colors.red.normal }}"     # Base 08 - Red
+    color02: "{{ colors.green.normal }}"   # Base 0B - Green
+    color03: "{{ colors.yellow.normal }}"  # Base 0A - Yellow
+    color04: "{{ colors.blue.normal }}"    # Base 0D - Blue
+    color05: "{{ colors.magenta.normal }}" # Base 0E - Magenta
+    color06: "{{ colors.cyan.normal }}"    # Base 0C - Cyan
+    color07: "{{ colors.white.normal }}"   # Base 05 - White
+
+    color08: "{{ colors.black.bold }}"     # Base 03 - Bright Black
+    color09: "{{ colors.red.bold }}"       # Base 08 - Bright Red
+    color10: "{{ colors.green.bold }}"     # Base 0B - Bright Green
+    color11: "{{ colors.yellow.bold }}"    # Base 0A - Bright Yellow
+    color12: "{{ colors.blue.bold }}"      # Base 0D - Bright Blue
+    color13: "{{ colors.magenta.bold }}"   # Base 0E - Bright Magenta
+    color14: "{{ colors.cyan.bold }}"      # Base 0C - Bright Cyan
+    color15: "{{ colors.white.bold }}"     # Base 07 - Bright White
+
+    color16: "#d08770"                   # Base 09
+    color17: "#ab7967"                   # Base 0F
+    color18: "#19202b"                   # Base 01
+    color19: "#344259"                   # Base 02
+    color20: "#b4b3b8"                   # Base 04
+    color21: "#d9d8de"                   # Base 06
+
+base00: "{{ colors.black.normal }}"
+base01: "#19202b"
+base02: "#344259"
+base03: "{{ colors.black.bold }}"
+base04: "#b4b3b8"
+base05: "{{ colors.white.normal }}"
+base06: "#96b564"
+base07: "{{ colors.white.bold }}"
+base08: "{{ colors.red.normal }}"
+base09: "#d08770"
+base0A: "{{ colors.yellow.normal }}"
+base0B: "{{ colors.green.normal }}"
+base0C: "{{ colors.cyan.normal }}"
+base0D: "{{ colors.blue.normal }}"
+base0E: "{{ colors.magenta.normal }}"
+base0F: "#ab7967"

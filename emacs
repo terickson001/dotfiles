@@ -9,7 +9,7 @@
  '(custom-enabled-themes (quote (base16-zenbu)))
  '(custom-safe-themes
    (quote
-    ("a2ec1b9fb1001e0ff20cf4d8081d274e9e4ea5d54b41111bc018aab481868fd5" "16dd114a84d0aeccc5ad6fd64752a11ea2e841e3853234f19dc02a7b91f5d661" "a920cba1f85f5d03189eb6a2ab421d5496a78022eb4e2411d557a91eca235e19" "886e74277dbab78e6db7138110dcd98cf44efc5eca72bca0947bd9c808a70edb" "78c1c89192e172436dbf892bd90562bc89e2cc3811b5f9506226e735a953a9c6" "6daa09c8c2c68de3ff1b83694115231faa7e650fdbb668bc76275f0f2ce2a437" "f117df52101107896ac5e4eef012c9f29f9c00c45e3048cbbcaef91d6f251904" "375a2072b175f88bbfb16272de07cf430d503488041ac33ec4d9fb337deb45d0" "338af97935405489710fb977a198bb833e9ffd34fbf2fab32b38637975369103" "b03a8d0138a52aa91c3b1a062281677c01e3a606dcddfba18d6fdcc657f147be" "e4c8810d9ab925567a69c11d5c95d198a4e7d05871453b2c92c020712559c4c1" default)))
+    ("2e47afef55f842cc112b49103aad0cdf03f44e5c5c780621fcd22746b2ec353e" "a2ec1b9fb1001e0ff20cf4d8081d274e9e4ea5d54b41111bc018aab481868fd5" "16dd114a84d0aeccc5ad6fd64752a11ea2e841e3853234f19dc02a7b91f5d661" "a920cba1f85f5d03189eb6a2ab421d5496a78022eb4e2411d557a91eca235e19" "886e74277dbab78e6db7138110dcd98cf44efc5eca72bca0947bd9c808a70edb" "78c1c89192e172436dbf892bd90562bc89e2cc3811b5f9506226e735a953a9c6" "6daa09c8c2c68de3ff1b83694115231faa7e650fdbb668bc76275f0f2ce2a437" "f117df52101107896ac5e4eef012c9f29f9c00c45e3048cbbcaef91d6f251904" "375a2072b175f88bbfb16272de07cf430d503488041ac33ec4d9fb337deb45d0" "338af97935405489710fb977a198bb833e9ffd34fbf2fab32b38637975369103" "b03a8d0138a52aa91c3b1a062281677c01e3a606dcddfba18d6fdcc657f147be" "e4c8810d9ab925567a69c11d5c95d198a4e7d05871453b2c92c020712559c4c1" default)))
  '(icicle-download-dir "~/.emacs.d/manual/icicles")
  '(package-archives
    (quote
@@ -17,7 +17,7 @@
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (gitignore-mode lua-mode naysayer-theme flycheck htmlize org-bullets fastnav nlinum ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit)))
+    (textx-mode rust-mode caseformat autodisass-llvm-bitcode idle-highlight-in-visible-buffers-mode ssh find-file-in-project gitignore-mode lua-mode naysayer-theme flycheck htmlize org-bullets fastnav nlinum ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit)))
  '(search-default-mode t)
  '(search-highlight nil)
  '(send-mail-function (quote sendmail-send-it)))
@@ -37,9 +37,14 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; Backups
-;; (setq backup-directory-alist `(("." . "~/.saves")))
-;; (setq backup-by-copying t)
-(setq make-backup-files nil)
+(make-directory "~/.saves" t)
+(setq backup-by-copying t)
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq auto-save-list-file-prefix "~/.saves/.auto-saves-")
+(setq auto-save-file-name-transforms
+      `((".*" , "~/.saves" t)))
+
+;; (setq make-backup-files nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -56,10 +61,11 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; (load-theme 'base16-zenbu t)
-;; (defvar base16-colors base16-zenbu-colors)
-(load-theme 'naysayer t)
-(defvar base16-colors nil)
+(if (display-graphic-p)
+    (progn
+      (load-theme 'naysayer t) )
+  (setq base16-theme-256-color-source "base16-shell")
+  (load-theme 'base16-zenbu t) )
 
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
@@ -153,15 +159,6 @@
     (wc-mode t) ))
 
 ;; c-mode
-(defvar base0F (plist-get base16-colors :base0F))
-
-(defface font-lock-delim-face 
-    `((nil (:foreground ,base0F :weight bold))
-      (t (:bold t :italic t)))
-  "Font Lock mode face used for delimiters."
-  :group 'font-lock-highlighting-faces)
-
-
 (if (not (numberp (position 'naysayer custom-enabled-themes)))
     (font-lock-add-keywords
      'c-mode
@@ -188,6 +185,22 @@
   (c-set-offset 'arglist-close 0))
 
 (add-hook 'c-mode-hook 'my/c-mode-hook)
+
+;; text-mode
+(defun my/text-mode-hook ()
+  (setq indent-tabs-mode nil)
+  (setq tab-width 4)
+  (setq indent-line-function 'insert-tab) )
+
+(add-hook 'text-mode-hook 'my/text-mode-hook)
+
+;; SSH Mode
+(require 'ssh)
+(add-hook 'ssh-mode-hook
+          (lambda ()
+            (setq ssh-directory-tracking-mode 'ftp)
+            (shell-dirtrack-mode t)
+            (setq dirtrackp nil)))
 
 ;; Org-Mode
 ;; (require 'org-install)
@@ -269,6 +282,10 @@
 ;; GLSL mode
 (load "~/.emacs.d/manual/glsl-mode")
 (add-to-list 'auto-mode-alist '("\\.\\(vs\\|fs\\|gs\\|glsl\\|vert\\|frag\\|geom\\)$" . glsl-mode))
+(font-lock-add-keywords
+ 'glsl-mode
+ '(
+   ("@\\(version\\|interface\\|vertex\\|geometry\\|fragment\\)" 1 'font-lock-builtin-face) ))
 
 ;; odin-mode
 (load "~/.emacs.d/manual/odin-mode")
@@ -328,4 +345,5 @@
 
 ;;  ;; For non ascii-characters in folder-names
 ;;  elmo-imap4-use-modified-utf7 t )
-;; (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)

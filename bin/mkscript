@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+for file in $@; do
+    if [ -e $file ]; then
+        continue;
+    fi
+    echo -e "#! /usr/bin/env bash\n" > $file
+    chmod +x $file
+done
