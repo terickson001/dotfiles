@@ -29,14 +29,14 @@ mkrepo: mkrepo [-n name] [-d description] [-h homepage] [-p] name
 EOF
 }
 
-TEMP=$(getopt -o "n:d:h:p" --long "name:,desc:,homepage:,private,help" -n "mkrepo" -- "$@")
+TEMP=$(getopt -o "n:d:hp" --long "name:,desc:,homepage:,private,help" -n "mkrepo" -- "$@")
 eval set -- "$TEMP"
 
 while true; do
     case "$1" in
         -n|--name) NAME=$2; shift 2;;
         -d|--desc) DESC=$2; shift 2;;
-        -h|--homepage) HOMEPAGE=$2; shift 2;;
+        --homepage) HOMEPAGE=$2; shift 2;;
         -p|--private) PRIVATE=true; shift;;
         --help) usage; exit; shift;;
         --) shift; break;;

@@ -17,7 +17,7 @@
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (textx-mode rust-mode caseformat autodisass-llvm-bitcode idle-highlight-in-visible-buffers-mode ssh find-file-in-project gitignore-mode lua-mode naysayer-theme flycheck htmlize org-bullets fastnav nlinum ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit)))
+    (nasm-mode textx-mode rust-mode caseformat autodisass-llvm-bitcode idle-highlight-in-visible-buffers-mode ssh find-file-in-project gitignore-mode lua-mode naysayer-theme flycheck htmlize org-bullets fastnav nlinum ecb wrap-region company iy-go-to-char ace-jump-mode ido-completing-read+ ido-vertical-mode fuzzy wc-mode org-journal sudo-edit iedit rainbow-delimiters slime elscreen elscreen-mew highlight-parentheses powerline base16-theme magit)))
  '(search-default-mode t)
  '(search-highlight nil)
  '(send-mail-function (quote sendmail-send-it)))
