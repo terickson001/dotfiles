@@ -27,6 +27,7 @@ ntfs-3g
 ntp
 nvidia
 nvidia-settings
+odin-git
 openssh
 p7zip
 pacaur
@@ -37,6 +38,7 @@ pkgtools
 playerctl
 polybar
 pulsemixer-git
+python
 python-pip
 rofi-dmenu
 rofi-git
