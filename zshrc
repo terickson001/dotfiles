@@ -42,33 +42,45 @@ function prompt_color() {
 }
 
 setopt PROMPT_SUBST
+unsetopt BEEP
 
 # PROMPT='>'
 PROMPT='%{$fg_bold[$(prompt_color)]%}>%{$reset_color%} '
-RPROMPT='%~$(prompt_git_info)'
+RPROMPT='%~'
 
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle chrissicool/zsh-bash
 
-export EDITOR=vim
+export EDITOR=nvim
 
 alias ":q"=exit
 alias "edit"=$EDITOR
 alias ":e"="edit"
-alias ":qa"="pkill -9 urxvtc"
-alias "yi"="yi --frontend vty --keymap vim"
 alias "ls"="ls --color=always -F"
 alias "svim"="ssh-agent -- vim -c '!ssh-add'"
 
-export GOROOT="$HOME/go"
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
 export GOPATH="$HOME/go"
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin:$HOME/opt/ARMCompiler6.8/bin:$GOROOT/bin"
+export PATH="$PATH:/mnt/p11/.bin:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/.bin:$HOME/opt/ARMCompiler6.8/bin:$GOPATH/bin:$JAVA_HOME/bin"
 # export MONITOR=$(xrandr -q | grep primary | cut -d " " -f 1)
 export LC_COLLATE="C"
 export LC_ALL=en_US.UTF-8
 export ECLIPSE_HOME="$HOME/.eclipse/org.eclipse.platform_4.7.0_155965261_linux_gtk_x86_64"
+export ODIN_ROOT="/home/tyler/projects/Odin/src/"
+export ANDROID_HOME="~/.local/etc/android-sdk"
+export ADB="$ANDROID_HOME/windows/platform-tools/adb.exe"
+export WINHOME="/mnt/c/Users/terickso/"
+export TYLE="$WINHOME/code/Odin/tyle"
+
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+# export DISPLAY=$(ip route | head -n1 | awk '{print $3}'):0.0
+# export LIBGL_ALWAYS_INDIRECT=1
+# export XAUTHORITY=$HOME/.Xauthority
 
 antigen apply

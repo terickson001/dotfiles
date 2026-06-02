@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+cmd.exe /C "scrcpy.exe.lnk --no-audio -d --crop 1224:1750:0:625"

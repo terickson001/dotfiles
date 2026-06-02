@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+directory=/home/tyler/projects/
+directories=("/home/tyler/projects" "/home/tyler/projects_linux" "/mnt/p11" "/mnt/p11/work" "/mnt/p11/scripts" "/mnt/p4" "/mnt/c/Users/terickso/code")
+depths=("1,2" "1,2" "0,0" "1,1" "0,0" "0,0" "1,2")
+
+idx=0
+for dir in "${directories[@]}"; do
+	depth=${depths[$idx]}
+	min=$(echo $depth | cut -d, -f1)
+	max=$(echo $depth | cut -d, -f2)
+	newoptions=($(find $dir -mindepth $min -maxdepth $max -type d ! -iname ".*"))
+	options=("${options[@]}" "${newoptions[@]}")
+
+	newshort=($(echo "${newoptions[@]}" | sed "s|$(dirname $dir)/||g"))
+	short=("${short[@]}" "${newshort[@]}")
+	idx=$((idx + 1))
+done
+
+
+selected_name=$(printf "%s\n" ${short[*]} | fzf)
+for i in "${!short[@]}"; do
+	if [[ "${short[$i]}" = "${selected_name}" ]]; then
+		selected=${options[$i]}
+		break
+	fi
+done
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+fi
+
+tmux switch-client -t $selected_name
